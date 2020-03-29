@@ -31,11 +31,11 @@ PacmanWindow::PacmanWindow(QWidget *pParent, Qt::WindowFlags flags):QFrame(pPare
 
    // BOUTONS -------------------------------------------------------
 
-    PacmanButton *btnajout = new PacmanButton(this);
-    btnajout->setFixedSize(110,32);
-    btnajout->setText("Ajouter un fantome");
-
-    connect(btnajout, PacmanButton::clicked, this, PacmanWindow::ajoutfantome);
+//    PacmanButton *btnajout = new PacmanButton(this);
+//    btnajout->setFixedSize(110,32);
+//    btnajout->setText("Ajouter un fantome");
+//
+//    connect(btnajout, PacmanButton::clicked, this, PacmanWindow::ajoutfantome);
 //
 //    PacmanButton *btnsuppr = new PacmanButton(this);
 //    btnsuppr->setFixedSize(110,32);
@@ -109,18 +109,18 @@ void PacmanWindow::handleTimer()
     update();
 }
 
-void PacmanWindow::ajoutfantome()
-{
-    int x, y;
-    do                                      // Les fantomes sont placés sur des cases valides, soit des cases qui ne sont pas des murs
-    {
-        x = rand()%(jeu.getlargeur());
-        y = rand()%(jeu.gethauteur());
-    } while (!jeu.posValide(x,y));
-
-    jeu.fantomes.push_back(Fantome(x,y));       // une fois des coordonnées valides trouvées, le fantôme est ajouté à la liste
-
-}
+//void PacmanWindow::ajoutfantome()
+//{
+//    int x, y;
+//    do                                      // Les fantomes sont placés sur des cases valides, soit des cases qui ne sont pas des murs
+//    {
+//        x = rand()%(jeu.getlargeur());
+//        y = rand()%(jeu.gethauteur());
+//    } while (!jeu.posValide(x,y));
+//
+//    jeu.fantomes.push_back(Fantome(x,y));       // une fois des coordonnées valides trouvées, le fantôme est ajouté à la liste
+//
+//}
 
 void PacmanButton::keyPressEvent(QKeyEvent *e)
 {
