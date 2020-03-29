@@ -13,7 +13,5 @@ int main(int argc, char *argv[])
     PacmanWindow wnd;
     wnd.show();
 
-    cout<<"Hello"<<"\n"<<endl;
-
     return app.exec();
 }
