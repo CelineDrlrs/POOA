@@ -13,5 +13,6 @@ int main(int argc, char *argv[])
     PacmanWindow wnd;
     wnd.show();
 
+
     return app.exec();
 }
