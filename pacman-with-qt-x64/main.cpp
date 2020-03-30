@@ -1,6 +1,5 @@
 #include <time.h>
 #include "pacmanwindow.h"
-#include <iostream>
 
 Q_IMPORT_PLUGIN(QWindowsIntegrationPlugin);
 

@@ -2,9 +2,6 @@
 #define JEU_H
 
 #include <list>
-#include <QtCore/QtCore>
-#include <QtWidgets/QtWidgets>
-
 using namespace std;
 
 typedef enum {VIDE, MUR} Case;
@@ -22,9 +19,22 @@ class Fantome
 
   public:
     Fantome();
-    Fantome(int, int);
     int getPosX() const;
     int getPosY() const;
+};
+
+class point
+{
+        friend class Jeu;
+
+    protected:
+        int posX, posY;
+        Direction dir;
+
+    public:
+        point();
+        int getPosX() const;
+        int getPosY() const;
 };
 
 class Jeu
@@ -36,8 +46,9 @@ class Jeu
 
   public:
     list<Fantome> fantomes;
+    list<point> points;
+    int nbpoint ;
 
-  public:
     Jeu();
     Jeu(const Jeu &)=delete;
     ~Jeu();
@@ -64,11 +75,6 @@ class Jeu
 
     // Déplace Pacman dans une direction (si la case à atteindre est valide)
     bool deplacePacman(Direction);
-
-    // Retourne largeur/longueur
-    int getlargeur() const;
-    int gethauteur() const;
-
 };
 
 #endif

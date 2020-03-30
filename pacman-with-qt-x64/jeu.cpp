@@ -1,6 +1,8 @@
 #include "jeu.h"
 #include <iostream>
 #include <assert.h>
+#include <list>
+
 
 Fantome::Fantome()
 {
@@ -14,6 +16,23 @@ int Fantome::getPosX() const
 }
 
 int Fantome::getPosY() const
+{
+    return posY;
+}
+
+
+point::point()
+{
+    posX = 0; posY = 0;
+    dir = BAS;
+}
+
+int point::getPosX() const
+{
+    return posX;
+}
+
+int point::getPosY() const
 {
     return posY;
 }
@@ -34,10 +53,11 @@ Jeu::~Jeu()
 bool Jeu::init()
 {
 	int x, y;
+	nbpoint=0;
 	list<Fantome>::iterator itFantome;
+	list<point>::iterator itpoint;
 
 	const char terrain_defaut[15][21] = {
-
 		"####################",
 		"#........##........#",
 		"#.#####..##...####.#",
@@ -58,16 +78,27 @@ bool Jeu::init()
 	largeur = 20;
 	hauteur = 15;
 
-	terrain = new Case[largeur*(hauteur)];
+	terrain = new Case[largeur*hauteur];
 
 	for(y=0;y<hauteur;++y)
 		for(x=0;x<largeur;++x)
             if (terrain_defaut[y][x]=='#')
                 terrain[y*largeur+x] = MUR;
             else
+            {
                 terrain[y*largeur+x] = VIDE;
+                nbpoint=nbpoint+1;
+            }
+
+
 
     fantomes.resize(10);
+
+
+
+
+
+// Préparation des fantômes
 
 	for (itFantome=fantomes.begin(); itFantome!=fantomes.end(); itFantome++)
     {
@@ -80,6 +111,24 @@ bool Jeu::init()
         itFantome->posY = y;
         itFantome->dir = (Direction)(rand()%4);
     }
+
+ //Initialisation Points
+
+ points.resize(nbpoint);
+ itpoint=points.begin();
+ do
+    {
+        for(y=0;y<hauteur;++y)
+            for(x=0;x<largeur;++x)
+            {
+                if (terrain[y*largeur+x] == VIDE)
+                {
+                    itpoint->posX = x;
+                    itpoint->posY = y;
+                    itpoint++;
+                }
+            }
+    } while(itpoint!=points.end());
 
     do {
         x = rand()%largeur;
@@ -96,6 +145,7 @@ void Jeu::evolue()
 {
     int testX, testY;
 	list<Fantome>::iterator itFantome;
+	list<point>::iterator itpoint;
 
     int depX[] = {-1, 1, 0, 0};
     int depY[] = {0, 0, -1, 1};
@@ -164,14 +214,4 @@ bool Jeu::deplacePacman(Direction dir)
     }
     else
         return false;
-}
-
-int Jeu::getlargeur() const
-{
-    return largeur;
-}
-
-int Jeu::gethauteur() const
-{
-    return hauteur;
 }
