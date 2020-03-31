@@ -3834,15 +3834,14 @@
 	<iostream>
 	<assert.h>
 
-1585317817 source:c:\users\responsable\documents\github\pooa\pacman-with-qt-x64\jeu.cpp
+1585656358 source:c:\users\responsable\documents\github\pooa\pacman-with-qt-x64\jeu.cpp
 	"jeu.h"
 	<iostream>
 	<assert.h>
-
-1585318338 c:\users\responsable\documents\github\pooa\pacman-with-qt-x64\jeu.h
 	<list>
-	<QtCore/QtCore>
-	<QtWidgets/QtWidgets>
+
+1585656358 c:\users\responsable\documents\github\pooa\pacman-with-qt-x64\jeu.h
+	<list>
 
 1505728632 c:\users\responsable\documents\github\pooa\qtbase-small-5.6.3-x64\include\qtcore\qtcore
 	<QtCore/QtCoreDepends>
@@ -7654,21 +7653,18 @@
 
 1505728630 c:\users\responsable\documents\github\pooa\qtbase-small-5.6.3-x64\include\qtwidgets\qtwidgetsversion.h
 
-1585316751 source:c:\users\responsable\documents\github\pooa\pacman-with-qt-x64\pacmanwindow.cpp
+1585666310 source:c:\users\responsable\documents\github\pooa\pacman-with-qt-x64\pacmanwindow.cpp
 	<iostream>
 	"pacmanwindow.h"
-	<stdlib.h>
-	"jeu.h"
 
-1585316425 c:\users\responsable\documents\github\pooa\pacman-with-qt-x64\pacmanwindow.h
+1585656358 c:\users\responsable\documents\github\pooa\pacman-with-qt-x64\pacmanwindow.h
 	<QtCore/QtCore>
 	<QtWidgets/QtWidgets>
 	"jeu.h"
 
-1585491174 source:c:\users\responsable\documents\github\pooa\pacman-with-qt-x64\main.cpp
+1585579128 source:c:\users\responsable\documents\github\pooa\pacman-with-qt-x64\main.cpp
 	<time.h>
 	"pacmanwindow.h"
-	<iostream>
 
 1585653136 source:c:\users\raphaël .laptop-3odig0b7\documents\github\pooa\pacman-with-qt-x64\jeu.cpp
 	"jeu.h"

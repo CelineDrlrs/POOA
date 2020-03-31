@@ -29,9 +29,9 @@ PacmanWindow::PacmanWindow(QWidget *pParent, Qt::WindowFlags flags):QFrame(pPare
         exit(-1);
     }
 
-    if (pixmapFantome.load("./data/fantome.bmp")==false)
+    if (pixmapFantome.load("./data/fantome.png")==false)
     {
-        cout<<"Impossible d'ouvrir fantome.bmp"<<endl;
+        cout<<"Impossible d'ouvrir fantome.png"<<endl;
         exit(-1);
     }
 
