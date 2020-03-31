@@ -135,13 +135,15 @@ bool Jeu::init()
 
 // Initialisation de la position du pacman
 
+    x=10;
+    y=11;
 //    do {
 //        x = rand()%largeur;
 //        y = rand()%hauteur;
 //    } while (terrain[y*largeur+x]!=VIDE);
 
-    posPacmanX = 10,
-    posPacmanY = 11;
+    posPacmanX = x,
+    posPacmanY = y;
 
     return true;
 }

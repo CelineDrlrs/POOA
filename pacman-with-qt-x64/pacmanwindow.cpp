@@ -47,10 +47,12 @@ PacmanWindow::PacmanWindow(QWidget *pParent, Qt::WindowFlags flags):QFrame(pPare
         exit(-1);
     }
 
+    //Bouton ajout d'un fantôme
     PacmanButton *btnajout = new PacmanButton(this);
     btnajout->setFixedSize(110,32);
     btnajout->setText("Ajouter un fantome");
 
+    //création de l'action
     connect(btnajout, PacmanButton::clicked, this, PacmanWindow::ajoutfantome);
 
     jeu.init();
@@ -105,6 +107,8 @@ void PacmanWindow::paintEvent(QPaintEvent *)
 
 	// Dessine Pacman en fonction de la touche appuyée pour le tourner dans la bonne direction
 
+
+
 	if (jeu.PosPac==BAS)
     {
         painter.drawPixmap(jeu.getPacmanX()*largeurCase, jeu.getPacmanY()*hauteurCase, pixmapPacmanB);
@@ -118,6 +122,10 @@ void PacmanWindow::paintEvent(QPaintEvent *)
         painter.drawPixmap(jeu.getPacmanX()*largeurCase, jeu.getPacmanY()*hauteurCase, pixmapPacmanG);
     }
     else if (jeu.PosPac==DROITE)
+    {
+        painter.drawPixmap(jeu.getPacmanX()*largeurCase, jeu.getPacmanY()*hauteurCase, pixmapPacmanD);
+    }
+    else
     {
         painter.drawPixmap(jeu.getPacmanX()*largeurCase, jeu.getPacmanY()*hauteurCase, pixmapPacmanD);
     }
