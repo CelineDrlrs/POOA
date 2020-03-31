@@ -19,6 +19,7 @@ class Fantome
 
   public:
     Fantome();
+    Fantome(int, int);
     int getPosX() const;
     int getPosY() const;
 };
@@ -79,6 +80,10 @@ class Jeu
 
     // Déplace Pacman dans une direction (si la case à atteindre est valide)
     bool deplacePacman(Direction);
+
+    // Retourne la laregeur et hauteur du jeu
+    int getlargeur() const;
+    int gethauteur() const;
 };
 
 #endif

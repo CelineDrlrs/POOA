@@ -10,6 +10,12 @@ Fantome::Fantome()
     dir = BAS;
 }
 
+Fantome::Fantome(int x, int y)
+{
+    posX = x; posY = y;
+    dir = BAS;
+}
+
 int Fantome::getPosX() const
 {
     return posX;
@@ -126,6 +132,9 @@ bool Jeu::init()
             }
     }
     while(itpoint!=points.end());
+
+// Initialisation de la position du pacman
+
 //    do {
 //        x = rand()%largeur;
 //        y = rand()%hauteur;
@@ -229,4 +238,14 @@ bool Jeu::deplacePacman(Direction dir)
 int Jeu::scoreactuel()const
 {
     return score;
+}
+
+int Jeu::getlargeur() const
+{
+    return largeur;
+}
+
+int Jeu::gethauteur() const
+{
+    return hauteur;
 }
