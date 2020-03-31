@@ -49,8 +49,9 @@ PacmanWindow::PacmanWindow(QWidget *pParent, Qt::WindowFlags flags):QFrame(pPare
 
     //Bouton ajout d'un fantôme
     PacmanButton *btnajout = new PacmanButton(this);
-    btnajout->setFixedSize(110,32);
+    btnajout->resize(110,32);
     btnajout->setText("Ajouter un fantome");
+    btnajout->setFont(QFont("Segoe UI"));
 
     //création de l'action
     connect(btnajout, PacmanButton::clicked, this, PacmanWindow::ajoutfantome);
@@ -58,9 +59,10 @@ PacmanWindow::PacmanWindow(QWidget *pParent, Qt::WindowFlags flags):QFrame(pPare
 
     //Bouton supprimer un fantôme
     PacmanButton *btnsuppr = new PacmanButton(this);
-    btnsuppr->setFixedSize(110,32);
+    btnsuppr->resize(110,32);
     btnsuppr->move(122,0);
     btnsuppr->setText("Retirer un fantome");
+    btnsuppr->setFont(QFont("Segoe UI"));
 
     //création de l'action
     connect(btnsuppr, PacmanButton::clicked, this, PacmanWindow::retirefantome);
@@ -94,6 +96,11 @@ void PacmanWindow::paintEvent(QPaintEvent *)
     list<Fantome>::const_iterator itFantome;
     list<point>::const_iterator itpoint;
     int x, y;
+
+    //Fond du jeu en nois
+    painter.fillRect(0, 0, 828, 828, Qt::black);
+    painter.beginNativePainting();
+
 
     // Taille des cases en pixels
     int largeurCase, hauteurCase;

@@ -6,7 +6,6 @@
 #include "jeu.h"
 
 // déclaration d'une nouvelle classe héritant de QPushButton pour que les touches soient actives en même temps que les boutons
-
 class PacmanButton : public QPushButton
 {
   public:
