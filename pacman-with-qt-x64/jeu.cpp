@@ -242,12 +242,3 @@ int Jeu::scoreactuel()const
     return score;
 }
 
-int Jeu::getlargeur() const
-{
-    return largeur;
-}
-
-int Jeu::gethauteur() const
-{
-    return hauteur;
-}

@@ -55,6 +55,18 @@ PacmanWindow::PacmanWindow(QWidget *pParent, Qt::WindowFlags flags):QFrame(pPare
     //création de l'action
     connect(btnajout, PacmanButton::clicked, this, PacmanWindow::ajoutfantome);
 
+
+    //Bouton supprimer un fantôme
+    PacmanButton *btnsuppr = new PacmanButton(this);
+    btnsuppr->setFixedSize(110,32);
+    btnsuppr->move(122,0);
+    btnsuppr->setText("Retirer un fantome");
+
+    //création de l'action
+    connect(btnsuppr, PacmanButton::clicked, this, PacmanWindow::retirefantome);
+
+
+
     jeu.init();
 
     QTimer *timer = new QTimer(this);
@@ -97,17 +109,13 @@ void PacmanWindow::paintEvent(QPaintEvent *)
 
 
     // Dessine les points (important de le mettre avant les fantomes et pacman sinon superposition non voulue)
-    for (itpoint=jeu.points.begin(); itpoint!=jeu.points.end(); itpoint++)
-        painter.drawPixmap(itpoint->getPosX()*largeurCase, itpoint->getPosY()*hauteurCase, pixmappoint);
+    for (itpoint=jeu.points.begin(); itpoint!=jeu.points.end(); itpoint++) painter.drawPixmap(itpoint->getPosX()*largeurCase, itpoint->getPosY()*hauteurCase, pixmappoint);
 
 
     // Dessine les fantomes
-    for (itFantome=jeu.fantomes.begin(); itFantome!=jeu.fantomes.end(); itFantome++)
-        painter.drawPixmap(itFantome->getPosX()*largeurCase, itFantome->getPosY()*hauteurCase, pixmapFantome);
+    for (itFantome=jeu.fantomes.begin(); itFantome!=jeu.fantomes.end(); itFantome++) painter.drawPixmap(itFantome->getPosX()*largeurCase, itFantome->getPosY()*hauteurCase, pixmapFantome);
 
 	// Dessine Pacman en fonction de la touche appuyée pour le tourner dans la bonne direction
-
-
 
 	if (jeu.PosPac==BAS)
     {
@@ -164,10 +172,18 @@ void PacmanWindow::ajoutfantome()
     int x, y;
     do                                      // Les fantomes sont placés sur des cases valides, soit des cases qui ne sont pas des murs
     {
-        x = rand()%(jeu.getlargeur());
-        y = rand()%(jeu.gethauteur());
+        x = rand()%(jeu.getNbCasesX());
+        y = rand()%(jeu.getNbCasesY());
     } while (!jeu.posValide(x,y));
 
     jeu.fantomes.push_back(Fantome(x,y));       // une fois des coordonnées valides trouvées, le fantôme est ajouté à la liste
 
+}
+
+void PacmanWindow::retirefantome()
+{
+    if(jeu.fantomes.size()!=0)              // On fait attention à ce que la liste ne soit aps déjà vide avant de chercher à retirer un fantome supplémentaire, sinon, le programme plante
+     {
+         jeu.fantomes.pop_back();
+     }
 }

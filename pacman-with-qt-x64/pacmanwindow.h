@@ -20,7 +20,7 @@ class PacmanWindow : public QFrame
     Jeu jeu;
     QLCDNumber *Affiscore;
     QPixmap pixmapPacmanD, pixmapPacmanG, pixmapPacmanH, pixmapPacmanB, pixmapFantome, pixmapMur, pixmappoint ;
-    PacmanButton *btnajout;
+    PacmanButton *btnajout,*btnsuppr;
 
   public:
     PacmanWindow(QWidget *pParent=0, Qt::WindowFlags flags=0);
@@ -30,6 +30,7 @@ class PacmanWindow : public QFrame
     void paintEvent(QPaintEvent *);
     void keyPressEvent(QKeyEvent *);
     void ajoutfantome();
+    void retirefantome();
 };
 
 #endif
