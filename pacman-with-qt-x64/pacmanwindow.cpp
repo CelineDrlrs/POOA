@@ -35,9 +35,9 @@ PacmanWindow::PacmanWindow(QWidget *pParent, Qt::WindowFlags flags):QFrame(pPare
         exit(-1);
     }
 
-    if (pixmapMur.load("./data/mur.bmp")==false)
+    if (pixmapMur.load("./data/mur.png")==false)
     {
-        cout<<"Impossible d'ouvrir mur.bmp"<<endl;
+        cout<<"Impossible d'ouvrir mur.png"<<endl;
         exit(-1);
     }
 
