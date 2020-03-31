@@ -202,6 +202,7 @@ bool Jeu::deplacePacman(Direction dir)
     int depX[] = {-1, 1, 0, 0};
     int depY[] = {0, 0, -1, 1};
     int testX, testY;
+    PosPac=dir;
 
     testX = posPacmanX + depX[dir];
     testY = posPacmanY + depY[dir];

@@ -48,6 +48,7 @@ class Jeu
     list<Fantome> fantomes;
     list<point> points;
     int nbpoint ;
+    Direction PosPac;
 
     Jeu();
     Jeu(const Jeu &)=delete;

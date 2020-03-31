@@ -8,9 +8,24 @@ PacmanWindow::PacmanWindow(QWidget *pParent, Qt::WindowFlags flags):QFrame(pPare
     // Taille des cases en pixels
     int largeurCase, hauteurCase;
 
-    if (pixmapPacman.load("./data/pacman.bmp")==false)
+    if (pixmapPacmanD.load("./data/pacmanD.png")==false)
     {
-        cout<<"Impossible d'ouvrir pacman.png"<<endl;
+        cout<<"Impossible d'ouvrir pacmanD.png"<<endl;
+        exit(-1);
+    }
+    if (pixmapPacmanG.load("./data/pacmanG.png")==false)
+    {
+        cout<<"Impossible d'ouvrir pacmanG.png"<<endl;
+        exit(-1);
+    }
+    if (pixmapPacmanH.load("./data/pacmanH.png")==false)
+    {
+        cout<<"Impossible d'ouvrir pacmanH.png"<<endl;
+        exit(-1);
+    }
+    if (pixmapPacmanB.load("./data/pacmanB.png")==false)
+    {
+        cout<<"Impossible d'ouvrir pacmanB.png"<<endl;
         exit(-1);
     }
 
@@ -63,16 +78,35 @@ void PacmanWindow::paintEvent(QPaintEvent *)
 			if (jeu.getCase(x,y)==MUR)
                 painter.drawPixmap(x*largeurCase, y*hauteurCase, pixmapMur);
 
+
+    // Dessine les points (important de le mettre avant les fantomes et pacman sinon superposition non voulue)
+    for (itpoint=jeu.points.begin(); itpoint!=jeu.points.end(); itpoint++)
+        painter.drawPixmap(itpoint->getPosX()*largeurCase, itpoint->getPosY()*hauteurCase, pixmappoint);
+
+
     // Dessine les fantomes
     for (itFantome=jeu.fantomes.begin(); itFantome!=jeu.fantomes.end(); itFantome++)
         painter.drawPixmap(itFantome->getPosX()*largeurCase, itFantome->getPosY()*hauteurCase, pixmapFantome);
 
-    // Dessine les points
-    for (itpoint=jeu.points.begin(); itpoint!=jeu.points.end(); itpoint++)
-        painter.drawPixmap(itpoint->getPosX()*largeurCase, itpoint->getPosY()*hauteurCase, pixmappoint);
+	// Dessine Pacman en fonction de la touche appuyée pour le tourner dans la bonne direction
 
-	// Dessine Pacman
-	painter.drawPixmap(jeu.getPacmanX()*largeurCase, jeu.getPacmanY()*hauteurCase, pixmapPacman);
+	if (jeu.PosPac==BAS)
+    {
+        painter.drawPixmap(jeu.getPacmanX()*largeurCase, jeu.getPacmanY()*hauteurCase, pixmapPacmanB);
+    }
+    else if (jeu.PosPac==HAUT)
+    {
+        painter.drawPixmap(jeu.getPacmanX()*largeurCase, jeu.getPacmanY()*hauteurCase, pixmapPacmanH);
+    }
+    else if (jeu.PosPac==GAUCHE)
+    {
+        painter.drawPixmap(jeu.getPacmanX()*largeurCase, jeu.getPacmanY()*hauteurCase, pixmapPacmanG);
+    }
+    else if (jeu.PosPac==DROITE)
+    {
+        painter.drawPixmap(jeu.getPacmanX()*largeurCase, jeu.getPacmanY()*hauteurCase, pixmapPacmanD);
+    }
+
 }
 
 void PacmanWindow::keyPressEvent(QKeyEvent *event)
