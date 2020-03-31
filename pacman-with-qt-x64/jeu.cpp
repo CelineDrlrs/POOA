@@ -40,6 +40,7 @@ int point::getPosY() const
 Jeu::Jeu()
 {
     terrain = NULL;
+    score =0;
     largeur = 0; hauteur = 0;
     posPacmanX = 0; posPacmanY = 0;
 }
@@ -54,6 +55,7 @@ bool Jeu::init()
 {
 	int x, y;
 	nbpoint=0;
+	score=0;
 	list<Fantome>::iterator itFantome;
 	list<point>::iterator itpoint;
 
@@ -89,14 +91,7 @@ bool Jeu::init()
                 terrain[y*largeur+x] = VIDE;
                 nbpoint=nbpoint+1;
             }
-
-
-
     fantomes.resize(10);
-
-
-
-
 
 // Préparation des fantômes
 
@@ -114,9 +109,9 @@ bool Jeu::init()
 
  //Initialisation Points
 
- points.resize(nbpoint);
- itpoint=points.begin();
- do
+    points.resize(nbpoint);
+    itpoint=points.begin();
+    do
     {
         for(y=0;y<hauteur;++y)
             for(x=0;x<largeur;++x)
@@ -128,8 +123,8 @@ bool Jeu::init()
                     itpoint++;
                 }
             }
-    } while(itpoint!=points.end());
-
+    }
+    while(itpoint!=points.end());
     do {
         x = rand()%largeur;
         y = rand()%hauteur;
@@ -150,6 +145,8 @@ void Jeu::evolue()
     int depX[] = {-1, 1, 0, 0};
     int depY[] = {0, 0, -1, 1};
 
+
+
     for (itFantome=fantomes.begin(); itFantome!=fantomes.end(); itFantome++)
     {
         testX = itFantome->posX + depX[itFantome->dir];
@@ -164,8 +161,19 @@ void Jeu::evolue()
             // Changement de direction
             itFantome->dir = (Direction)(rand()%4);
     }
+  // disparition des points et incrémentation du score
+    for (itpoint=points.begin(); itpoint!=points.end(); itpoint++)
+    {
+        testY = itpoint->posY;
+        testX = itpoint->posX;
+        if ((testY==posPacmanY)&&(testX==posPacmanX))
+        {
+            score += 10;
+            points.erase(itpoint);
+            break;
+        }
+    }
 }
-
 int Jeu::getNbCasesX() const
 {
     return largeur;
@@ -215,4 +223,9 @@ bool Jeu::deplacePacman(Direction dir)
     }
     else
         return false;
+}
+
+int Jeu::scoreactuel()const
+{
+    return score;
 }

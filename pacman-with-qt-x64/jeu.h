@@ -47,7 +47,7 @@ class Jeu
   public:
     list<Fantome> fantomes;
     list<point> points;
-    int nbpoint ;
+    int nbpoint, score ;
     Direction PosPac;
 
     Jeu();
@@ -58,6 +58,9 @@ class Jeu
 
     bool init();
     void evolue();
+
+    //Score
+    int scoreactuel()const;
 
     // Retourne les dimensions (en nombre de cases)
     int getNbCasesX() const;

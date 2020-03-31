@@ -57,6 +57,15 @@ PacmanWindow::PacmanWindow(QWidget *pParent, Qt::WindowFlags flags):QFrame(pPare
     hauteurCase = pixmapMur.height();
 
     resize(jeu.getNbCasesX()*largeurCase, jeu.getNbCasesY()*hauteurCase);
+
+    QLabel *Tagscore = new QLabel(this);
+    Tagscore->setStyleSheet("background-color:pink");
+    Tagscore->setGeometry(400,20,50,20);
+    Tagscore->setText("  Score");
+    Affiscore = new QLCDNumber(this);
+    Affiscore->setGeometry(450,20,50,20);
+    Affiscore->display(jeu.scoreactuel());
+    Affiscore->setStyleSheet("background-color:black");
 }
 
 void PacmanWindow::paintEvent(QPaintEvent *)
@@ -125,5 +134,6 @@ void PacmanWindow::keyPressEvent(QKeyEvent *event)
 void PacmanWindow::handleTimer()
 {
     jeu.evolue();
+    Affiscore->display(jeu.scoreactuel());
     update();
 }

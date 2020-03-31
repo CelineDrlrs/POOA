@@ -9,6 +9,7 @@ class PacmanWindow : public QFrame
 {
   protected:
     Jeu jeu;
+    QLCDNumber *Affiscore;
     QPixmap pixmapPacmanD, pixmapPacmanG, pixmapPacmanH, pixmapPacmanB, pixmapFantome, pixmapMur, pixmappoint ;
 
   public:
