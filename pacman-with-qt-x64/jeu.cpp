@@ -105,7 +105,7 @@ bool Jeu::init()
 
 	largeur = 21;
 	hauteur = 16;
-	nbvie = 1;
+	nbvie = 3;
 
 	terrain = new Case[largeur*hauteur];
 
@@ -252,7 +252,7 @@ void Jeu::evolue()
             }
         }
 
-        if(testpertevie())         // On regarde si pacman perd une vie puis on applique la perte sur le nombre de vie et on replace aléatoirement pacman
+        if(testpertevie())         // On regarde si pacman perd une vie puis on applique la perte sur le nombre de vie et on replace pacman au début du jeu
             {
                 int largeur = 20;
                 int hauteur = 15;
@@ -263,8 +263,8 @@ void Jeu::evolue()
                     y = rand()%hauteur;
                 } while (terrain[y*largeur+x]==MUR);
 
-                posPacmanX = x;
-                posPacmanY = y;
+                posPacmanX = 10;
+                posPacmanY = 11;
             }
         if (getnbvie()==0)
             {
