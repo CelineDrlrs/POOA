@@ -66,6 +66,7 @@ Jeu::Jeu()
     score =0;
     largeur = 0; hauteur = 0;
     posPacmanX = 0; posPacmanY = 0;
+    nbvie = 0;
 }
 
 Jeu::~Jeu()
@@ -104,6 +105,7 @@ bool Jeu::init()
 
 	largeur = 21;
 	hauteur = 16;
+	nbvie = 1;
 
 	terrain = new Case[largeur*hauteur];
 
@@ -181,74 +183,94 @@ bool Jeu::init()
 
 void Jeu::evolue()
 {
-    int testX, testY;
-	list<Fantome>::iterator itFantome;
-	list<point>::iterator itpoint;
-	list<gum>::iterator itgum;
-
-    int depX[] = {-1, 1, 0, 0};
-    int depY[] = {0, 0, -1, 1};
-
-
-
-    for (itFantome=fantomes.begin(); itFantome!=fantomes.end(); itFantome++)
+    if(getnbvie()!=0 && gagne()==false)
     {
-        testX = itFantome->posX + depX[itFantome->dir];
-        testY = itFantome->posY + depY[itFantome->dir];
+        int x,y;
+        int testX, testY;
+        list<Fantome>::iterator itFantome;
+        list<point>::iterator itpoint;
+        list<gum>::iterator itgum;
 
-        if (terrain[testY*largeur+testX]==VIDE)
+        int depX[] = {-1, 1, 0, 0};
+        int depY[] = {0, 0, -1, 1};
+
+        for (itFantome=fantomes.begin(); itFantome!=fantomes.end(); itFantome++)
         {
-            itFantome->posX = testX;
-            itFantome->posY = testY;
+            testX = itFantome->posX + depX[itFantome->dir];
+            testY = itFantome->posY + depY[itFantome->dir];
+
+            if (terrain[testY*largeur+testX]==VIDE)
+            {
+                itFantome->posX = testX;
+                itFantome->posY = testY;
+            }
+            else
+                // Changement de direction
+                itFantome->dir = (Direction)(rand()%4);
         }
-        else
-            // Changement de direction
-            itFantome->dir = (Direction)(rand()%4);
-    }
-  // disparition des points et incrémentation du score
-    for (itpoint=points.begin(); itpoint!=points.end(); itpoint++)
-    {
-        testY = itpoint->posY;
-        testX = itpoint->posX;
-        if ((testY==posPacmanY)&&(testX==posPacmanX))
+    // disparition des points et incrémentation du score
+        for (itpoint=points.begin(); itpoint!=points.end(); itpoint++)
         {
-            score += 10;
-            points.erase(itpoint);
-            break;
-        }
-    }
-    // Disparition des Gum et incrémentation du score ( 50pt par gum mangée ) + Capacité à manger les fantomes
-
-       for (itgum=gums.begin(); itgum!=gums.end(); itgum++)
-    {
-        testY = itgum->posY;
-        testX = itgum->posX;
-        if ((testY==posPacmanY)&&(testX==posPacmanX))
-        {
-            score += 50;
-            gums.erase(itgum);
-            Jeu::gumMiam = 1;
-            break;
-        }
-    }
-    // Capacité à manger les fantômes si une gum a été mangée ( 250 points par fantome mangé !)
-
-    if(Jeu::gumMiam == 1)
-    {
-           for (itFantome=fantomes.begin(); itFantome!=fantomes.end(); itFantome++)
-        {
-            testY = itFantome->posY;
-            testX = itFantome->posX;
+            testY = itpoint->posY;
+            testX = itpoint->posX;
             if ((testY==posPacmanY)&&(testX==posPacmanX))
             {
-                score += 250;
-                fantomes.erase(itFantome);
-                Jeu::gumMiam = 0;
+                score += 10;
+                points.erase(itpoint);
                 break;
             }
         }
-    }
+        // Disparition des Gum et incrémentation du score ( 50pt par gum mangée ) + Capacité à manger les fantomes
 
+        for (itgum=gums.begin(); itgum!=gums.end(); itgum++)
+        {
+            testY = itgum->posY;
+            testX = itgum->posX;
+            if ((testY==posPacmanY)&&(testX==posPacmanX))
+            {
+                score += 50;
+                gums.erase(itgum);
+                Jeu::gumMiam = 1;
+                break;
+            }
+        }
+        // Capacité à manger les fantômes si une gum a été mangée ( 250 points par fantome mangé !)
+
+        if(Jeu::gumMiam == 1)
+        {
+            for (itFantome=fantomes.begin(); itFantome!=fantomes.end(); itFantome++)
+            {
+                testY = itFantome->posY;
+                testX = itFantome->posX;
+                if ((testY==posPacmanY)&&(testX==posPacmanX))
+                {
+                    score += 250;
+                    fantomes.erase(itFantome);
+                    Jeu::gumMiam = 0;
+                    break;
+                }
+            }
+        }
+
+        if(testpertevie())         // On regarde si pacman perd une vie puis on applique la perte sur le nombre de vie et on replace aléatoirement pacman
+            {
+                int largeur = 20;
+                int hauteur = 15;
+                setnbvie(getnbvie()-1);
+                cout<<"Pacman perd une vie"<<endl;
+                do {
+                    x = rand()%largeur;
+                    y = rand()%hauteur;
+                } while (terrain[y*largeur+x]==MUR);
+
+                posPacmanX = x;
+                posPacmanY = y;
+            }
+        if (getnbvie()==0)
+            {
+                cout<<"Game Over"<<endl;
+            }
+    }
 }
 int Jeu::getNbCasesX() const
 {
@@ -306,3 +328,44 @@ int Jeu::scoreactuel()const
     return score;
 }
 
+int Jeu::getnbvie() const
+{
+    return nbvie;
+}
+
+void Jeu::setnbvie(int vie)
+{
+    nbvie=vie;
+}
+
+
+
+  // Perte de vie
+bool Jeu::testpertevie()                        // On teste si Pacman perd une vie
+{
+    list<Fantome>::iterator itFantome;
+
+    if(Jeu::gumMiam == 0)
+    {
+            for (itFantome=fantomes.begin(); itFantome!=fantomes.end(); itFantome++)
+        {
+            if ((itFantome->posX == posPacmanX) && (itFantome->posY == posPacmanY)&&(nbvie>0))
+            {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+bool Jeu::gagne()                   // joueur gagnant = le terrain n'a plus de gum
+{
+    int x,y;
+    for(y=0;y<hauteur;++y)
+		for(x=0;x<largeur;++x)
+            if (terrain[y*largeur+x]==(VIDE || MUR))
+            {
+                return false;
+            }
+    return false;
+}

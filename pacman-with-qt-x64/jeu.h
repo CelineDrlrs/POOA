@@ -59,6 +59,7 @@ class Jeu
     Case *terrain;
     int largeur, hauteur; // Nombre de cases en largeur et en hauteur
     int posPacmanX, posPacmanY;
+    int nbvie;
 
   public:
     list<Fantome> fantomes;
@@ -97,6 +98,15 @@ class Jeu
 
     // Déplace Pacman dans une direction (si la case à atteindre est valide)
     bool deplacePacman(Direction);
+
+    // Teste la perte de vie
+    bool testpertevie();
+
+    // Getteur et setteur vie
+    int getnbvie() const;
+    void setnbvie(int);
+
+    bool gagne ();
 };
 
 #endif

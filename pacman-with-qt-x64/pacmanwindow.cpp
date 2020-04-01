@@ -58,6 +58,16 @@ PacmanWindow::PacmanWindow(QWidget *pParent, Qt::WindowFlags flags):QFrame(pPare
         cout<<"Impossible d'ouvrir FantBleu.png"<<endl;
         exit(-1);
     }
+    if (pixmapCoeur.load("./data/coeur.bmp")==false)
+    {
+        cout<<"Impossible d'ouvrir coeur.bmp"<<endl;
+        exit(-1);
+    }
+    if (pixmapGameOver.load("./data/gameover.bmp")==false)
+    {
+        cout<<"Impossible d'ouvrir gameover.bmp"<<endl;
+        exit(-1);
+    }
 
     //Bouton ajout d'un fantôme
     PacmanButton *btnajout = new PacmanButton(this);
@@ -105,70 +115,83 @@ PacmanWindow::PacmanWindow(QWidget *pParent, Qt::WindowFlags flags):QFrame(pPare
 void PacmanWindow::paintEvent(QPaintEvent *)
 {
     QPainter painter(this);
-    list<Fantome>::const_iterator itFantome;
-    list<point>::const_iterator itpoint;
-    list<gum>::const_iterator itgum;
-    int x, y ;
-
-    //Fond du jeu en nois
-    painter.fillRect(0, 0, 828, 828, Qt::black);
-    painter.beginNativePainting();
-
-    // Taille des cases en pixels
-    int largeurCase, hauteurCase, decalage;
-
-    largeurCase = pixmapMur.width();
-    hauteurCase = pixmapMur.height();
-    decalage = 60;
-
-    // Dessine les cases
-    for (y=0;y<jeu.getNbCasesY();y++)
-        for (x=0;x<jeu.getNbCasesX();x++)
-			if (jeu.getCase(x,y)==MUR)
-                painter.drawPixmap(x*largeurCase,y*hauteurCase+decalage, pixmapMur);
-
-
-    // Dessine les points (important de le mettre avant les fantomes et pacman sinon superposition non voulue)
-    for (itpoint=jeu.points.begin(); itpoint!=jeu.points.end(); itpoint++) painter.drawPixmap(itpoint->getPosX()*largeurCase, decalage + itpoint->getPosY()*hauteurCase, pixmappoint);
-
-    // Dessine les Gum
-    for (itgum=jeu.gums.begin(); itgum!=jeu.gums.end(); itgum++) painter.drawPixmap(itgum->getPosX()*largeurCase, decalage + itgum->getPosY()*hauteurCase, pixmapGum);
-
-    // Dessine les fantomes
-
-    if (jeu.gumMiam == 1)
+    if(jeu.getnbvie()>0)                                // On teste si le joueur a encore des vies
     {
-        for (itFantome=jeu.fantomes.begin(); itFantome!=jeu.fantomes.end(); itFantome++) painter.drawPixmap(itFantome->getPosX()*largeurCase, decalage + itFantome->getPosY()*hauteurCase, pixmapFantBleu);
+        list<Fantome>::const_iterator itFantome;
+        list<point>::const_iterator itpoint;
+        list<gum>::const_iterator itgum;
+        int x, y ;
 
+        //Fond du jeu en noir
+        painter.fillRect(0, 0, 828, 828, Qt::black);
+        painter.beginNativePainting();
+
+        // Taille des cases en pixels
+        int largeurCase, hauteurCase, decalage;
+
+        largeurCase = pixmapMur.width();
+        hauteurCase = pixmapMur.height();
+        decalage = 60;
+
+        // Dessine les cases
+        for (y=0;y<jeu.getNbCasesY();y++)
+            for (x=0;x<jeu.getNbCasesX();x++)
+                if (jeu.getCase(x,y)==MUR)
+                    painter.drawPixmap(x*largeurCase,y*hauteurCase+decalage, pixmapMur);
+
+
+        // Dessine les points (important de le mettre avant les fantomes et pacman sinon superposition non voulue)
+        for (itpoint=jeu.points.begin(); itpoint!=jeu.points.end(); itpoint++) painter.drawPixmap(itpoint->getPosX()*largeurCase, decalage + itpoint->getPosY()*hauteurCase, pixmappoint);
+
+        // Dessine les Gum
+        for (itgum=jeu.gums.begin(); itgum!=jeu.gums.end(); itgum++) painter.drawPixmap(itgum->getPosX()*largeurCase, decalage + itgum->getPosY()*hauteurCase, pixmapGum);
+
+        // Dessine les fantomes
+
+        if (jeu.gumMiam == 1)
+        {
+            for (itFantome=jeu.fantomes.begin(); itFantome!=jeu.fantomes.end(); itFantome++) painter.drawPixmap(itFantome->getPosX()*largeurCase, decalage + itFantome->getPosY()*hauteurCase, pixmapFantBleu);
+
+        }
+        else
+        {
+            for (itFantome=jeu.fantomes.begin(); itFantome!=jeu.fantomes.end(); itFantome++) painter.drawPixmap(itFantome->getPosX()*largeurCase, decalage + itFantome->getPosY()*hauteurCase, pixmapFantome);
+        }
+
+        // Dessine les coeurs
+                int i;
+                for(i=1;i<=jeu.getnbvie();i++)
+                {
+                    painter.drawPixmap(240 + i*32, 0, pixmapCoeur);     // On affiche les coeurs autant de fois que le ou les joueurs ont de vie en les décalant pour chacun
+                }
+
+        // Dessine Pacman en fonction de la touche appuyée pour le tourner dans la bonne direction
+
+        if (jeu.PosPac==BAS)
+        {
+            painter.drawPixmap(jeu.getPacmanX()*largeurCase, decalage + jeu.getPacmanY()*hauteurCase, pixmapPacmanB);
+        }
+        else if (jeu.PosPac==HAUT)
+        {
+            painter.drawPixmap(jeu.getPacmanX()*largeurCase, decalage + jeu.getPacmanY()*hauteurCase, pixmapPacmanH);
+        }
+        else if (jeu.PosPac==GAUCHE)
+        {
+            painter.drawPixmap(jeu.getPacmanX()*largeurCase, decalage + jeu.getPacmanY()*hauteurCase, pixmapPacmanG);
+        }
+        else if (jeu.PosPac==DROITE)
+        {
+            painter.drawPixmap(jeu.getPacmanX()*largeurCase, decalage + jeu.getPacmanY()*hauteurCase, pixmapPacmanD);
+        }
+        else
+        {
+            painter.drawPixmap(jeu.getPacmanX()*largeurCase, decalage + jeu.getPacmanY()*hauteurCase, pixmapPacmanD);
+        }
     }
     else
     {
-        for (itFantome=jeu.fantomes.begin(); itFantome!=jeu.fantomes.end(); itFantome++) painter.drawPixmap(itFantome->getPosX()*largeurCase, decalage + itFantome->getPosY()*hauteurCase, pixmapFantome);
+        painter.drawPixmap(50, 40, pixmapGameOver);      // Si toutes les vies sont épuisées, l'image de Game Over apparait à la place du terrain
     }
-
-	// Dessine Pacman en fonction de la touche appuyée pour le tourner dans la bonne direction
-
-	if (jeu.PosPac==BAS)
-    {
-        painter.drawPixmap(jeu.getPacmanX()*largeurCase, decalage + jeu.getPacmanY()*hauteurCase, pixmapPacmanB);
-    }
-    else if (jeu.PosPac==HAUT)
-    {
-        painter.drawPixmap(jeu.getPacmanX()*largeurCase, decalage + jeu.getPacmanY()*hauteurCase, pixmapPacmanH);
-    }
-    else if (jeu.PosPac==GAUCHE)
-    {
-        painter.drawPixmap(jeu.getPacmanX()*largeurCase, decalage + jeu.getPacmanY()*hauteurCase, pixmapPacmanG);
-    }
-    else if (jeu.PosPac==DROITE)
-    {
-        painter.drawPixmap(jeu.getPacmanX()*largeurCase, decalage + jeu.getPacmanY()*hauteurCase, pixmapPacmanD);
-    }
-    else
-    {
-        painter.drawPixmap(jeu.getPacmanX()*largeurCase, decalage + jeu.getPacmanY()*hauteurCase, pixmapPacmanD);
-    }
-
 }
 
 void PacmanWindow::keyPressEvent(QKeyEvent *event)
