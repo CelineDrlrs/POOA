@@ -19,8 +19,8 @@ Affichage du score avec incrémentation par action :
 
 -Lorsque Pacman mange un Pacgum, les fantômes deviennent bleus
 
--Les fantômes bleus sont mangeable et redeviennent rouges une fois un fantome mangé.
+-Les fantômes bleus sont mangeables et redeviennent rouges une fois un fantome mangé.
 
-
-
+- Pacman a 3 vies symbolisées par des coeurs
+- Quand toutes les vies sont consommées, une image de Stéphane Guy et Paul Le Guen apparait avec un "Game Over" en hommage à la défaite 6-1 du PSG contre Barcelone et le mythique "noooonnnn, c'est pas possible !"
 
