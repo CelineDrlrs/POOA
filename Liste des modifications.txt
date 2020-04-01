@@ -1,0 +1,16 @@
+Changements visuels/décors :
+- Changement du design de Pacman (avec noeud), fantôme pirate, fantôme bleu
+- Changement de design des briques
+- Ajout d'un fond noir
+
+Mise en places de boutons et connexion à la fonction :
+- d'ajout de fantômes
+- de suppression de fantômes
+Disposition des boutons en haut du jeu et non sur le jeu
+
+Affichage du score avec incrémentation par boule mangée
+
+Lorsque Pacman mange un Pacgum, les fantômes deviennent bleus
+Les pacman bleus sont mangeable et redeviennent rouges une fois un fantome mangé.
+
+
