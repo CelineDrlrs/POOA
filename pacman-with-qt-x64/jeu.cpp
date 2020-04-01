@@ -360,12 +360,9 @@ bool Jeu::testpertevie()                        // On teste si Pacman perd une v
 
 bool Jeu::gagne()                   // joueur gagnant = le terrain n'a plus de gum
 {
-    int x,y;
-    for(y=0;y<hauteur;++y)
-		for(x=0;x<largeur;++x)
-            if (terrain[y*largeur+x]==(VIDE || MUR))
-            {
-                return false;
-            }
+        if (points.empty())
+        {
+            return true;
+        }
     return false;
 }
