@@ -270,6 +270,10 @@ void Jeu::evolue()
             {
                 cout<<"Game Over"<<endl;
             }
+        if (gagne()==true)
+        {
+            cout<<"Et c'est gagné !! Oui, oui, oui !!!"<<endl;
+        }
     }
 }
 int Jeu::getNbCasesX() const

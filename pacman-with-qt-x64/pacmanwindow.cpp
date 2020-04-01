@@ -68,6 +68,11 @@ PacmanWindow::PacmanWindow(QWidget *pParent, Qt::WindowFlags flags):QFrame(pPare
         cout<<"Impossible d'ouvrir gameover.bmp"<<endl;
         exit(-1);
     }
+    if (pixmapVictoire.load("./data/victoire.bmp")==false)
+    {
+        cout<<"Impossible d'ouvrir victoire.bmp"<<endl;
+        exit(-1);
+    }
 
     //Bouton ajout d'un fantôme
     PacmanButton *btnajout = new PacmanButton(this);
@@ -186,6 +191,10 @@ void PacmanWindow::paintEvent(QPaintEvent *)
         else
         {
             painter.drawPixmap(jeu.getPacmanX()*largeurCase, decalage + jeu.getPacmanY()*hauteurCase, pixmapPacmanD);
+        }
+        if (jeu.gagne()==true)
+        {
+            painter.drawPixmap(0, 40, pixmapVictoire); //si on gagne, l'image de la vitoire apparaît
         }
     }
     else
