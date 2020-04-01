@@ -24,6 +24,21 @@ class Fantome
     int getPosY() const;
 };
 
+class gum
+{
+        friend class Jeu;
+
+    protected:
+        int posX, posY;
+        Direction dir;
+
+    public:
+        gum();
+        int getPosX() const;
+        int getPosY() const;
+};
+
+
 class point
 {
         friend class Jeu;
@@ -48,8 +63,10 @@ class Jeu
   public:
     list<Fantome> fantomes;
     list<point> points;
+    list<gum> gums;
     int nbpoint, score ;
     Direction PosPac;
+    int gumMiam;
 
     Jeu();
     Jeu(const Jeu &)=delete;

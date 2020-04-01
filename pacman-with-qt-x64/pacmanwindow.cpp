@@ -47,6 +47,17 @@ PacmanWindow::PacmanWindow(QWidget *pParent, Qt::WindowFlags flags):QFrame(pPare
         cout<<"Impossible d'ouvrir point.png"<<endl;
         exit(-1);
     }
+   if (pixmapGum.load("./data/Gum.png")==false)
+    {
+        cout<<"Impossible d'ouvrir Gum.png"<<endl;
+        exit(-1);
+    }
+
+   if (pixmapFantBleu.load("./data/FantBleu.png")==false)
+    {
+        cout<<"Impossible d'ouvrir FantBleu.png"<<endl;
+        exit(-1);
+    }
 
     //Bouton ajout d'un fantôme
     PacmanButton *btnajout = new PacmanButton(this);
@@ -56,7 +67,6 @@ PacmanWindow::PacmanWindow(QWidget *pParent, Qt::WindowFlags flags):QFrame(pPare
 
     //création de l'action
     connect(btnajout, PacmanButton::clicked, this, PacmanWindow::ajoutfantome);
-
 
     //Bouton supprimer un fantôme
     PacmanButton *btnsuppr = new PacmanButton(this);
@@ -68,8 +78,6 @@ PacmanWindow::PacmanWindow(QWidget *pParent, Qt::WindowFlags flags):QFrame(pPare
     //création de l'action
     connect(btnsuppr, PacmanButton::clicked, this, PacmanWindow::retirefantome);
 
-
-
     jeu.init();
 
     QTimer *timer = new QTimer(this);
@@ -80,6 +88,9 @@ PacmanWindow::PacmanWindow(QWidget *pParent, Qt::WindowFlags flags):QFrame(pPare
     hauteurCase = pixmapMur.height();
 
     resize(jeu.getNbCasesX()*largeurCase, decalage + jeu.getNbCasesY()*hauteurCase);
+
+
+    // Affichage du score et du label "score" devant"
 
     QLabel *Tagscore = new QLabel(this);
     Tagscore->setStyleSheet("background-color:pink");
@@ -96,7 +107,8 @@ void PacmanWindow::paintEvent(QPaintEvent *)
     QPainter painter(this);
     list<Fantome>::const_iterator itFantome;
     list<point>::const_iterator itpoint;
-    int x, y;
+    list<gum>::const_iterator itgum;
+    int x, y ;
 
     //Fond du jeu en nois
     painter.fillRect(0, 0, 828, 828, Qt::black);
@@ -119,9 +131,20 @@ void PacmanWindow::paintEvent(QPaintEvent *)
     // Dessine les points (important de le mettre avant les fantomes et pacman sinon superposition non voulue)
     for (itpoint=jeu.points.begin(); itpoint!=jeu.points.end(); itpoint++) painter.drawPixmap(itpoint->getPosX()*largeurCase, decalage + itpoint->getPosY()*hauteurCase, pixmappoint);
 
+    // Dessine les Gum
+    for (itgum=jeu.gums.begin(); itgum!=jeu.gums.end(); itgum++) painter.drawPixmap(itgum->getPosX()*largeurCase, decalage + itgum->getPosY()*hauteurCase, pixmapGum);
 
     // Dessine les fantomes
-    for (itFantome=jeu.fantomes.begin(); itFantome!=jeu.fantomes.end(); itFantome++) painter.drawPixmap(itFantome->getPosX()*largeurCase, decalage + itFantome->getPosY()*hauteurCase, pixmapFantome);
+
+    if (jeu.gumMiam == 1)
+    {
+        for (itFantome=jeu.fantomes.begin(); itFantome!=jeu.fantomes.end(); itFantome++) painter.drawPixmap(itFantome->getPosX()*largeurCase, decalage + itFantome->getPosY()*hauteurCase, pixmapFantBleu);
+
+    }
+    else
+    {
+        for (itFantome=jeu.fantomes.begin(); itFantome!=jeu.fantomes.end(); itFantome++) painter.drawPixmap(itFantome->getPosX()*largeurCase, decalage + itFantome->getPosY()*hauteurCase, pixmapFantome);
+    }
 
 	// Dessine Pacman en fonction de la touche appuyée pour le tourner dans la bonne direction
 

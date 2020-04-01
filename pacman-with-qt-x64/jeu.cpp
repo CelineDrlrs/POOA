@@ -43,6 +43,23 @@ int point::getPosY() const
     return posY;
 }
 
+
+gum::gum()
+{
+    posX = 0; posY = 0;
+    dir = BAS;
+}
+
+int gum::getPosX() const
+{
+    return posX;
+}
+
+int gum::getPosY() const
+{
+    return posY;
+}
+
 Jeu::Jeu()
 {
     terrain = NULL;
@@ -64,6 +81,7 @@ bool Jeu::init()
 	score=0;
 	list<Fantome>::iterator itFantome;
 	list<point>::iterator itpoint;
+	list<gum>::iterator itgum;
 
 	const char terrain_defaut[16][22] = {
 		"#####################",
@@ -98,7 +116,7 @@ bool Jeu::init()
                 terrain[y*largeur+x] = VIDE;
                 nbpoint=nbpoint+1;
             }
-    fantomes.resize(10);
+    fantomes.resize(4);
 
 // Préparation des fantômes
 
@@ -114,6 +132,19 @@ bool Jeu::init()
         itFantome->dir = (Direction)(rand()%4);
     }
 
+// Initialisation des Gum
+
+    gums.resize(4);
+    for(itgum=gums.begin(); itgum!=gums.end(); itgum++)
+    {
+        do {
+            x = rand()%largeur;
+            y = rand()%hauteur;
+        } while (terrain[y*largeur+x]!=VIDE);
+
+        itgum->posX = x;
+        itgum->posY = y;
+    }
  //Initialisation Points
 
     points.resize(nbpoint);
@@ -153,6 +184,7 @@ void Jeu::evolue()
     int testX, testY;
 	list<Fantome>::iterator itFantome;
 	list<point>::iterator itpoint;
+	list<gum>::iterator itgum;
 
     int depX[] = {-1, 1, 0, 0};
     int depY[] = {0, 0, -1, 1};
@@ -182,6 +214,20 @@ void Jeu::evolue()
         {
             score += 10;
             points.erase(itpoint);
+            break;
+        }
+    }
+    // Disparition des Gum et incrémentation du score ( 50pt par gum mangée ) + Capacité à manger les fantomes
+
+       for (itgum=gums.begin(); itgum!=gums.end(); itgum++)
+    {
+        testY = itgum->posY;
+        testX = itgum->posX;
+        if ((testY==posPacmanY)&&(testX==posPacmanX))
+        {
+            score += 50;
+            gums.erase(itgum);
+            Jeu::gumMiam = 1;
             break;
         }
     }
