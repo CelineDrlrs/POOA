@@ -24,4 +24,4 @@ Affichage du score avec incrémentation par action :
 - Pacman a 3 vies symbolisées par des coeurs
 - Quand toutes les vies sont consommées, une image de Stéphane Guy et Paul Le Guen apparait avec un "Game Over" en hommage à la défaite 6-1 du PSG contre Barcelone et le mythique "noooonnnn, c'est pas possible !"
 
-- Quand toutes les gumsont été mangées, le jeu s'arrête, c'est une vitoire
+- Quand toutes les gums ont été mangées, le jeu s'arrête et l'image correspondante apparaît, c'est une vitoire
