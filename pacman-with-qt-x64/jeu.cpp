@@ -231,6 +231,24 @@ void Jeu::evolue()
             break;
         }
     }
+    // Capacité à manger les fantômes si une gum a été mangée ( 250 points par fantome mangé !)
+
+    if(Jeu::gumMiam == 1)
+    {
+           for (itFantome=fantomes.begin(); itFantome!=fantomes.end(); itFantome++)
+        {
+            testY = itFantome->posY;
+            testX = itFantome->posX;
+            if ((testY==posPacmanY)&&(testX==posPacmanX))
+            {
+                score += 250;
+                fantomes.erase(itFantome);
+                Jeu::gumMiam = 0;
+                break;
+            }
+        }
+    }
+
 }
 int Jeu::getNbCasesX() const
 {
