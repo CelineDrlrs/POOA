@@ -6,11 +6,21 @@ Changements visuels/décors :
 Mise en places de boutons et connexion à la fonction :
 - d'ajout de fantômes
 - de suppression de fantômes
+
+Orientation de PacMan suivant la touche appuyée (haut, bas, gauche, droite) 
+
 Disposition des boutons en haut du jeu et non sur le jeu
 
-Affichage du score avec incrémentation par boule mangée
+Affichage du score avec incrémentation par action :
 
-Lorsque Pacman mange un Pacgum, les fantômes deviennent bleus
-Les pacman bleus sont mangeable et redeviennent rouges une fois un fantome mangé.
+-10pts pour une boule
+-50pts pour une gum
+-250pts pour un fantôme bleu.  
+
+-Lorsque Pacman mange un Pacgum, les fantômes deviennent bleus
+
+-Les fantômes bleus sont mangeable et redeviennent rouges une fois un fantome mangé.
+
+
 
 
