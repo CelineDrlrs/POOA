@@ -6,7 +6,8 @@ using namespace std;
 PacmanWindow::PacmanWindow(QWidget *pParent, Qt::WindowFlags flags):QFrame(pParent, flags)
 {
     // Taille des cases en pixels
-    int largeurCase, hauteurCase;
+    int largeurCase, hauteurCase, decalage;
+    decalage = 60 ;
 
     if (pixmapPacmanD.load("./data/pacmanD.png")==false)
     {
@@ -78,14 +79,14 @@ PacmanWindow::PacmanWindow(QWidget *pParent, Qt::WindowFlags flags):QFrame(pPare
     largeurCase = pixmapMur.width();
     hauteurCase = pixmapMur.height();
 
-    resize(jeu.getNbCasesX()*largeurCase, jeu.getNbCasesY()*hauteurCase);
+    resize(jeu.getNbCasesX()*largeurCase, decalage + jeu.getNbCasesY()*hauteurCase);
 
     QLabel *Tagscore = new QLabel(this);
     Tagscore->setStyleSheet("background-color:pink");
-    Tagscore->setGeometry(400,20,50,20);
+    Tagscore->setGeometry(400,10,50,20);
     Tagscore->setText("  Score");
     Affiscore = new QLCDNumber(this);
-    Affiscore->setGeometry(450,20,50,20);
+    Affiscore->setGeometry(450,10,50,20);
     Affiscore->display(jeu.scoreactuel());
     Affiscore->setStyleSheet("background-color:black");
 }
@@ -101,48 +102,48 @@ void PacmanWindow::paintEvent(QPaintEvent *)
     painter.fillRect(0, 0, 828, 828, Qt::black);
     painter.beginNativePainting();
 
-
     // Taille des cases en pixels
-    int largeurCase, hauteurCase;
+    int largeurCase, hauteurCase, decalage;
 
     largeurCase = pixmapMur.width();
     hauteurCase = pixmapMur.height();
+    decalage = 60;
 
     // Dessine les cases
     for (y=0;y<jeu.getNbCasesY();y++)
         for (x=0;x<jeu.getNbCasesX();x++)
 			if (jeu.getCase(x,y)==MUR)
-                painter.drawPixmap(x*largeurCase, y*hauteurCase, pixmapMur);
+                painter.drawPixmap(x*largeurCase,y*hauteurCase+decalage, pixmapMur);
 
 
     // Dessine les points (important de le mettre avant les fantomes et pacman sinon superposition non voulue)
-    for (itpoint=jeu.points.begin(); itpoint!=jeu.points.end(); itpoint++) painter.drawPixmap(itpoint->getPosX()*largeurCase, itpoint->getPosY()*hauteurCase, pixmappoint);
+    for (itpoint=jeu.points.begin(); itpoint!=jeu.points.end(); itpoint++) painter.drawPixmap(itpoint->getPosX()*largeurCase, decalage + itpoint->getPosY()*hauteurCase, pixmappoint);
 
 
     // Dessine les fantomes
-    for (itFantome=jeu.fantomes.begin(); itFantome!=jeu.fantomes.end(); itFantome++) painter.drawPixmap(itFantome->getPosX()*largeurCase, itFantome->getPosY()*hauteurCase, pixmapFantome);
+    for (itFantome=jeu.fantomes.begin(); itFantome!=jeu.fantomes.end(); itFantome++) painter.drawPixmap(itFantome->getPosX()*largeurCase, decalage + itFantome->getPosY()*hauteurCase, pixmapFantome);
 
 	// Dessine Pacman en fonction de la touche appuyée pour le tourner dans la bonne direction
 
 	if (jeu.PosPac==BAS)
     {
-        painter.drawPixmap(jeu.getPacmanX()*largeurCase, jeu.getPacmanY()*hauteurCase, pixmapPacmanB);
+        painter.drawPixmap(jeu.getPacmanX()*largeurCase, decalage + jeu.getPacmanY()*hauteurCase, pixmapPacmanB);
     }
     else if (jeu.PosPac==HAUT)
     {
-        painter.drawPixmap(jeu.getPacmanX()*largeurCase, jeu.getPacmanY()*hauteurCase, pixmapPacmanH);
+        painter.drawPixmap(jeu.getPacmanX()*largeurCase, decalage + jeu.getPacmanY()*hauteurCase, pixmapPacmanH);
     }
     else if (jeu.PosPac==GAUCHE)
     {
-        painter.drawPixmap(jeu.getPacmanX()*largeurCase, jeu.getPacmanY()*hauteurCase, pixmapPacmanG);
+        painter.drawPixmap(jeu.getPacmanX()*largeurCase, decalage + jeu.getPacmanY()*hauteurCase, pixmapPacmanG);
     }
     else if (jeu.PosPac==DROITE)
     {
-        painter.drawPixmap(jeu.getPacmanX()*largeurCase, jeu.getPacmanY()*hauteurCase, pixmapPacmanD);
+        painter.drawPixmap(jeu.getPacmanX()*largeurCase, decalage + jeu.getPacmanY()*hauteurCase, pixmapPacmanD);
     }
     else
     {
-        painter.drawPixmap(jeu.getPacmanX()*largeurCase, jeu.getPacmanY()*hauteurCase, pixmapPacmanD);
+        painter.drawPixmap(jeu.getPacmanX()*largeurCase, decalage + jeu.getPacmanY()*hauteurCase, pixmapPacmanD);
     }
 
 }
