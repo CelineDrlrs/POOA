@@ -77,6 +77,7 @@ class Jeu
 
     bool init();
     void evolue();
+    bool insa();
 
     //Score
     int scoreactuel() const;

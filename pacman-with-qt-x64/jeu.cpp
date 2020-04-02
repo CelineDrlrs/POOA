@@ -193,6 +193,126 @@ bool Jeu::init()
     return true;
 }
 
+bool Jeu::insa()
+{
+	int x, y;
+	nbpoint=0;
+	score=0;
+	list<Fantome>::iterator itFantome;
+	list<point>::iterator itpoint;
+	list<gum>::iterator itgum;
+
+	const char terrain_defaut[17][22] = {
+        "#####################",
+		"#...................#",
+		"#......#######......#",
+		"#...................#",
+		"#......#######......#",
+		"#.........##........#",
+		"#.......##..........#",
+        "#......#######......#",
+		"####.............####",
+		"G   ...#...##....   D",
+		"####....##...#...####",
+		"#...................#",
+		"#......######.......#",
+		"#.........#..#......#",
+		"#......######.......#",
+		"#...................#",
+        "#####################"
+    };
+
+	largeur = 21;
+	hauteur = 18;
+	nbvie = 3;
+
+	terrain = new Case[largeur*hauteur];
+
+	for(y=0;y<hauteur;++y)
+		for(x=0;x<largeur;++x)
+            if (terrain_defaut[y][x]=='#')
+                terrain[y*largeur+x] = MUR;
+            else if(terrain_defaut[y][x]=='G')
+            {
+                terrain[y*largeur+x] = PORTEG;
+            }
+            else if(terrain_defaut[y][x]=='D')
+            {
+                terrain[y*largeur+x] = PORTED;
+            }
+            else if(terrain_defaut[y][x]==' ')
+            {
+                terrain[y*largeur+x] = RIEN;
+            }
+            else if(terrain_defaut[y][x]=='.')
+            {
+                terrain[y*largeur+x] = VIDE;
+                nbpoint=nbpoint+1;
+            }
+    fantomes.resize(4);
+
+// Préparation des fantômes
+
+	for (itFantome=fantomes.begin(); itFantome!=fantomes.end(); itFantome++)
+    {
+        do {
+            x = rand()%largeur;
+            y = rand()%hauteur;
+        } while (terrain[y*largeur+x]!=VIDE);
+
+        itFantome->posX = x;
+        itFantome->posY = y;
+        itFantome->dir = (Direction)(rand()%4);
+    }
+
+// Initialisation des Gum
+
+    gums.resize(4);
+    for(itgum=gums.begin(); itgum!=gums.end(); itgum++)
+    {
+        do {
+            x = rand()%largeur;
+            y = rand()%hauteur;
+        } while (terrain[y*largeur+x]!=VIDE);
+
+        itgum->posX = x;
+        itgum->posY = y;
+    }
+ //Initialisation Points
+
+    points.resize(nbpoint);
+    itpoint=points.begin();
+    do
+    {
+        for(y=0;y<hauteur;++y)
+            for(x=0;x<largeur;++x)
+            {
+                if (terrain[y*largeur+x] == VIDE)
+                {
+                    itpoint->posX = x;
+                    itpoint->posY = y;
+                    itpoint++;
+                }
+            }
+    }
+    while(itpoint!=points.end());
+
+// Initialisation de la position du pacman
+
+    x=10;  //On a fait en sorte que le pacman soit à une position donnée à chaque reprise du jeu
+    y=11;
+//    do {
+//        x = rand()%largeur;
+//        y = rand()%hauteur;
+//    } while (terrain[y*largeur+x]!=VIDE);
+
+    posPacmanX = x,
+    posPacmanY = y;
+
+    return true;
+}
+
+
 void Jeu::evolue()
 {
     if(getnbvie()!=0 && gagne()==false)
