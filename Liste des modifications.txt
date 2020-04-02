@@ -29,3 +29,5 @@ Affichage du score avec incrémentation par action :
 Blocage des touches en cas de victoire
 
 Ajout d'un bouton rejouer
+
+Possibilité de se téléporter d'un bout à l'autre du jeu
