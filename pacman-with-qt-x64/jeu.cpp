@@ -67,6 +67,7 @@ Jeu::Jeu()
     largeur = 0; hauteur = 0;
     posPacmanX = 0; posPacmanY = 0;
     nbvie = 0;
+    timeFant = 50 ;
 }
 
 Jeu::~Jeu()
@@ -221,6 +222,11 @@ void Jeu::evolue()
                 itFantome->dir = (Direction)(rand()%4);
         }
 
+    if (Jeu::gumMiam==1)
+    {
+        timeFant -= 1;
+    }
+
     // disparition des points et incrémentation du score
         for (itpoint=points.begin(); itpoint!=points.end(); itpoint++)
         {
@@ -245,6 +251,7 @@ void Jeu::evolue()
                 score += 50;
                 gums.erase(itgum);
                 Jeu::gumMiam = 1;
+                timeFant = 50 ;
                 break;
             }
         }
@@ -265,6 +272,10 @@ void Jeu::evolue()
                     break;
                 }
             }
+        }
+        if(Jeu::timeFant<=0)
+        {
+            Jeu::gumMiam = 0;
         }
 
         if(testpertevie())         // On regarde si pacman perd une vie puis on applique la perte sur le nombre de vie et on replace pacman au début du jeu

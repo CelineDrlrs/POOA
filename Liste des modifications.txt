@@ -17,7 +17,7 @@ Affichage du score avec incrémentation par action :
 -50pts pour une gum
 -250pts pour un fantôme bleu.  
 
--Lorsque Pacman mange un Pacgum, les fantômes deviennent bleus
+-Lorsque Pacman mange un Pacgum, les fantômes deviennent bleus pour un temps limité prédéfini.
 
 -Les fantômes bleus sont mangeables et redeviennent rouges une fois un fantome mangé.
 

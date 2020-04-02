@@ -60,6 +60,7 @@ class Jeu
     int largeur, hauteur; // Nombre de cases en largeur et en hauteur
     int posPacmanX, posPacmanY;
     int nbvie;
+    int timeFant;
 
   public:
     list<Fantome> fantomes;
