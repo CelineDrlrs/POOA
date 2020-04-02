@@ -28,6 +28,8 @@ Affichage du score avec incrémentation par action :
 
 Blocage des touches en cas de victoire
 
-Ajout d'un bouton rejouer
+Ajout d'un bouton rejouer qui remet la partie à zéro.
 
 Possibilité de se téléporter d'un bout à l'autre du jeu
+
+Ajout d'un boutton pour fermer la fenêtre de jeu.
