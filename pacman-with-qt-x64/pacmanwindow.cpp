@@ -98,11 +98,21 @@ PacmanWindow::PacmanWindow(QWidget *pParent, Qt::WindowFlags flags):QFrame(pPare
     btnrejouer->setFixedSize(70,32);
     btnrejouer->move(400,0);
     btnrejouer->setText("Rejouer");
-    btnsuppr->setFont(QFont("Segoe UI"));
+    btnrejouer->setFont(QFont("Segoe UI"));
 
     //connection à la méthode
     connect(btnrejouer, PacmanButton::clicked, this, PacmanWindow::rejouer);
 
+
+    //Bouton quitter
+    PacmanButton *btnquitter = new PacmanButton(this);
+    btnquitter->setFixedSize(70,32);
+    btnquitter->move(480,0);
+    btnquitter->setText("Quitter");
+    btnquitter->setFont(QFont("Segoe UI"));
+
+    //connection à la méthode
+    connect(btnquitter, PacmanButton::clicked, this, PacmanWindow::quitter);
 
     jeu.init();
 
@@ -271,6 +281,11 @@ void PacmanWindow::retirefantome()      //Méthode connectée au bouton "supprimer
 
 void PacmanWindow::rejouer()                 //Méthode connectée au bouton "rejouer", le score est remis à 0 et le jeu est réinitialisé
 {
-    //jeu.scoreactuel(0);
     jeu.init();
+    jeu.gumMiam=0;  //Si un super gum a été mangé, annuler l'effet en recommencant la partie
+}
+
+void PacmanWindow::quitter()                                 // pour quitter le jeu, on ferme la fenetre pacmanwindow
+{
+    close();
 }

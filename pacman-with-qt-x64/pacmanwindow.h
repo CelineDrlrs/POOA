@@ -31,6 +31,7 @@ class PacmanWindow : public QFrame
     void ajoutfantome();
     void retirefantome();
     void rejouer();
+    void quitter();
 };
 
 #endif

@@ -278,7 +278,7 @@ void Jeu::evolue()
             Jeu::gumMiam = 0;
         }
 
-        if(testpertevie())         // On regarde si pacman perd une vie puis on applique la perte sur le nombre de vie et on replace pacman au début du jeu
+        if(testpertevie())         //On regarde si pacman perd une vie puis on applique la perte sur le nombre de vie et on replace pacman au début du jeu
             {
                 int largeur = 20;
                 int hauteur = 15;
@@ -380,7 +380,7 @@ void Jeu::setnbvie(int vie)
 
 
 
-  // Perte de vie
+// Perte de vie
 bool Jeu::testpertevie()                        // On teste si Pacman perd une vie
 {
     list<Fantome>::iterator itFantome;
