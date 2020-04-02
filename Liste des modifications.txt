@@ -25,3 +25,7 @@ Affichage du score avec incrémentation par action :
 - Quand toutes les vies sont consommées, une image de Stéphane Guy et Paul Le Guen apparait avec un "Game Over" en hommage à la défaite 6-1 du PSG contre Barcelone et le mythique "noooonnnn, c'est pas possible !"
 
 - Quand toutes les gums ont été mangées, le jeu s'arrête et l'image correspondante apparaît, c'est une vitoire
+
+Blocage des touches en cas de victoire
+
+Ajout d'un bouton rejouer

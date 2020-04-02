@@ -4,7 +4,7 @@
 #include <list>
 using namespace std;
 
-typedef enum {VIDE, MUR} Case;
+typedef enum {VIDE, MUR, PORTEG, PORTED, RIEN} Case;
 typedef enum {GAUCHE, DROITE, HAUT, BAS} Direction;
 
 class Jeu;

@@ -93,7 +93,7 @@ bool Jeu::init()
 		"#......#.....#......#",
 		"#......#....##......#",
 		"####...#.....#...####",
-		" ......##....#.......",
+		"G   ...##....#...   D",
 		"####...#.....#...####",
 		"#........###........#",
 		"#...................#",
@@ -113,7 +113,19 @@ bool Jeu::init()
 		for(x=0;x<largeur;++x)
             if (terrain_defaut[y][x]=='#')
                 terrain[y*largeur+x] = MUR;
-            else
+            else if(terrain_defaut[y][x]=='G')
+            {
+                terrain[y*largeur+x] = PORTEG;
+            }
+            else if(terrain_defaut[y][x]=='D')
+            {
+                terrain[y*largeur+x] = PORTED;
+            }
+            else if(terrain_defaut[y][x]==' ')
+            {
+                terrain[y*largeur+x] = RIEN;
+            }
+            else if(terrain_defaut[y][x]=='.')
             {
                 terrain[y*largeur+x] = VIDE;
                 nbpoint=nbpoint+1;
@@ -208,6 +220,7 @@ void Jeu::evolue()
                 // Changement de direction
                 itFantome->dir = (Direction)(rand()%4);
         }
+
     // disparition des points et incrémentation du score
         for (itpoint=points.begin(); itpoint!=points.end(); itpoint++)
         {
@@ -220,6 +233,7 @@ void Jeu::evolue()
                 break;
             }
         }
+
         // Disparition des Gum et incrémentation du score ( 50pt par gum mangée ) + Capacité à manger les fantomes
 
         for (itgum=gums.begin(); itgum!=gums.end(); itgum++)
@@ -234,6 +248,7 @@ void Jeu::evolue()
                 break;
             }
         }
+
         // Capacité à manger les fantômes si une gum a été mangée ( 250 points par fantome mangé !)
 
         if(Jeu::gumMiam == 1)
@@ -275,6 +290,16 @@ void Jeu::evolue()
             cout<<"Et c'est gagné !! Oui, oui, oui !!!"<<endl;
         }
     }
+
+    //Création des portes de passage
+    if(terrain[posPacmanY*largeur+posPacmanX]==PORTEG)
+    {
+        posPacmanX=18;
+    }
+    if(terrain[posPacmanY*largeur+posPacmanX]==PORTED)
+    {
+        posPacmanX=1;
+    }
 }
 int Jeu::getNbCasesX() const
 {
@@ -304,7 +329,7 @@ Case Jeu::getCase(int x, int y) const
 
 bool Jeu::posValide(int x, int y) const
 {
-    return (x>=0 && x<largeur && y>=0 && y<hauteur && terrain[y*largeur+x]==VIDE);
+    return (x>=0 && x<largeur && y>=0 && y<hauteur && (terrain[y*largeur+x]==VIDE ||  terrain[y*largeur+x]==RIEN || terrain[y*largeur+x]==PORTED || terrain[y*largeur+x]==PORTEG));
 }
 
 bool Jeu::deplacePacman(Direction dir)
