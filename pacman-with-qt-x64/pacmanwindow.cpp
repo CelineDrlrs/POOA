@@ -98,10 +98,20 @@ PacmanWindow::PacmanWindow(QWidget *pParent, Qt::WindowFlags flags):QFrame(pPare
     btnrejouer->setFixedSize(70,32);
     btnrejouer->move(400,0);
     btnrejouer->setText("Rejouer");
-    btnsuppr->setFont(QFont("Segoe UI"));
+    btnrejouer->setFont(QFont("Segoe UI"));
 
     //connection à la méthode
     connect(btnrejouer, PacmanButton::clicked, this, PacmanWindow::rejouer);
+
+    //Bouton mode INSA
+    PacmanButton *btninsa = new PacmanButton(this);
+    btninsa->setFixedSize(70,32);
+    btninsa->move(500,0);
+    btninsa->setText("Mode INSA");
+    btninsa->setFont(QFont("Segoe UI"));
+
+    //connection à la méthode
+    connect(btninsa, PacmanButton::clicked, this, PacmanWindow::insa);
 
 
     jeu.init();
@@ -273,4 +283,9 @@ void PacmanWindow::rejouer()                 //Méthode connectée au bouton "rejo
 {
     //jeu.scoreactuel(0);
     jeu.init();
+}
+
+void PacmanWindow::insa()                 //Map INSA
+{
+    jeu.insa();
 }
