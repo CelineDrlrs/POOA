@@ -79,7 +79,7 @@ class Jeu
     void evolue();
 
     //Score
-    int scoreactuel()const;
+    int scoreactuel() const;
 
     // Retourne les dimensions (en nombre de cases)
     int getNbCasesX() const;

@@ -85,16 +85,16 @@ bool Jeu::init()
 	list<gum>::iterator itgum;
 
 	const char terrain_defaut[16][22] = {
-		"#####################",
+        "#####################",
 		"#........###........#",
 		"#.#####..###...####.#",
 		"#........###........#",
 		"#...................#",
 		"#......#.....#......#",
 		"#......#....##......#",
-		"#####..#.....#..#####",
-		"#......##....#......#",
-		"#......#.....#......#",
+		"####...#.....#...####",
+		" ......##....#.......",
+		"####...#.....#...####",
 		"#........###........#",
 		"#...................#",
 		"#.....#.......#.....#",
@@ -168,7 +168,7 @@ bool Jeu::init()
 
 // Initialisation de la position du pacman
 
-    x=10;
+    x=10;  //On a fait en sorte que le pacman soit à une position donnée à chaque reprise du jeu
     y=11;
 //    do {
 //        x = rand()%largeur;
@@ -257,7 +257,7 @@ void Jeu::evolue()
                 int largeur = 20;
                 int hauteur = 15;
                 setnbvie(getnbvie()-1);
-                cout<<"Pacman perd une vie"<<endl;
+                //cout<<"Pacman perd une vie"<<endl;
                 do {
                     x = rand()%largeur;
                     y = rand()%hauteur;
@@ -327,7 +327,7 @@ bool Jeu::deplacePacman(Direction dir)
         return false;
 }
 
-int Jeu::scoreactuel()const
+int Jeu::scoreactuel() const
 {
     return score;
 }

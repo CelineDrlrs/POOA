@@ -93,6 +93,17 @@ PacmanWindow::PacmanWindow(QWidget *pParent, Qt::WindowFlags flags):QFrame(pPare
     //création de l'action
     connect(btnsuppr, PacmanButton::clicked, this, PacmanWindow::retirefantome);
 
+    //Bouton rejouer
+    PacmanButton *btnrejouer = new PacmanButton(this);
+    btnrejouer->setFixedSize(70,32);
+    btnrejouer->move(400,0);
+    btnrejouer->setText("Rejouer");
+    btnsuppr->setFont(QFont("Segoe UI"));
+
+    //connection à la méthode
+    connect(btnrejouer, PacmanButton::clicked, this, PacmanWindow::rejouer);
+
+
     jeu.init();
 
     QTimer *timer = new QTimer(this);
@@ -111,10 +122,13 @@ PacmanWindow::PacmanWindow(QWidget *pParent, Qt::WindowFlags flags):QFrame(pPare
     Tagscore->setStyleSheet("background-color:pink");
     Tagscore->setGeometry(400,10,50,20);
     Tagscore->setText("  Score");
+    Tagscore->setFont(QFont("Segoe UI"));
+    Tagscore->move(270,35);
     Affiscore = new QLCDNumber(this);
-    Affiscore->setGeometry(450,10,50,20);
+    Affiscore->setGeometry(400,10,50,20);
     Affiscore->display(jeu.scoreactuel());
     Affiscore->setStyleSheet("background-color:black");
+    Affiscore->move(320, 35);
 }
 
 void PacmanWindow::paintEvent(QPaintEvent *)
@@ -192,26 +206,30 @@ void PacmanWindow::paintEvent(QPaintEvent *)
         {
             painter.drawPixmap(jeu.getPacmanX()*largeurCase, decalage + jeu.getPacmanY()*hauteurCase, pixmapPacmanD);
         }
+
+        //Condition d'affichage de la victoire
         if (jeu.gagne()==true)
         {
-            painter.drawPixmap(0, 40, pixmapVictoire); //si on gagne, l'image de la vitoire apparaît
+            painter.drawPixmap(0, 70, pixmapVictoire); //si on gagne, l'image de la vitoire apparaît
+
         }
+
     }
     else
     {
-        painter.drawPixmap(50, 40, pixmapGameOver);      // Si toutes les vies sont épuisées, l'image de Game Over apparait à la place du terrain
+        painter.drawPixmap(50, 70, pixmapGameOver);      // Si toutes les vies sont épuisées, l'image de Game Over apparait à la place du terrain
     }
 }
 
-void PacmanWindow::keyPressEvent(QKeyEvent *event)
+void PacmanWindow::keyPressEvent(QKeyEvent *event) //Blocage des mouvements du pacman lorsque le jeu est gagné
 {
-    if (event->key()==Qt::Key_Left)
+    if (event->key()==Qt::Key_Left && jeu.gagne()!=true)
         jeu.deplacePacman(GAUCHE);
-    else if (event->key()==Qt::Key_Right)
+    else if (event->key()==Qt::Key_Right && jeu.gagne()!=true)
         jeu.deplacePacman(DROITE);
-    else if (event->key()==Qt::Key_Up)
+    else if (event->key()==Qt::Key_Up && jeu.gagne()!=true)
         jeu.deplacePacman(HAUT);
-    else if (event->key()==Qt::Key_Down)
+    else if (event->key()==Qt::Key_Down && jeu.gagne()!=true)
         jeu.deplacePacman(BAS);
     update();
 }
@@ -230,23 +248,29 @@ void PacmanButton::keyPressEvent(QKeyEvent *e)
         QCoreApplication::sendEvent(parent(), e);
 }
 
-void PacmanWindow::ajoutfantome()
+void PacmanWindow::ajoutfantome()       //Méthode associée au bouton "ajouter fantome".
 {
     int x, y;
-    do                                      // Les fantomes sont placés sur des cases valides, soit des cases qui ne sont pas des murs
+    do                                      // Les fantomes sont placés aléatoirement sur des cases valides (hors des murs)
     {
         x = rand()%(jeu.getNbCasesX());
         y = rand()%(jeu.getNbCasesY());
     } while (!jeu.posValide(x,y));
 
-    jeu.fantomes.push_back(Fantome(x,y));       // une fois des coordonnées valides trouvées, le fantôme est ajouté à la liste
+    jeu.fantomes.push_back(Fantome(x,y));       //Une fois des coordonnées valides trouvées, le fantôme est ajouté à la liste
 
 }
 
-void PacmanWindow::retirefantome()
+void PacmanWindow::retirefantome()      //Méthode connectée au bouton "supprimer fantome"
 {
-    if(jeu.fantomes.size()!=0)              // On fait attention à ce que la liste ne soit aps déjà vide avant de chercher à retirer un fantome supplémentaire, sinon, le programme plante
+    if(jeu.fantomes.size()!=0)              //On fait attention à ce que la liste ne soit pas déjà vide avant de chercher à retirer un fantome supplémentaire, sinon, le programme plante
      {
          jeu.fantomes.pop_back();
      }
+}
+
+void PacmanWindow::rejouer()                 //Méthode connectée au bouton "rejouer", le score est remis à 0 et le jeu est réinitialisé
+{
+    //jeu.scoreactuel(0);
+    jeu.init();
 }

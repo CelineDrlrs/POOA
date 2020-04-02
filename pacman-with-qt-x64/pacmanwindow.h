@@ -30,6 +30,7 @@ class PacmanWindow : public QFrame
     void keyPressEvent(QKeyEvent *);
     void ajoutfantome();
     void retirefantome();
+    void rejouer();
 };
 
 #endif
