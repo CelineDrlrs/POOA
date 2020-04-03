@@ -78,59 +78,113 @@ Jeu::~Jeu()
 
 bool Jeu::init()
 {
-	int x, y;
-	nbpoint=0;
-	score=0;
-	list<Fantome>::iterator itFantome;
-	list<point>::iterator itpoint;
-	list<gum>::iterator itgum;
+    int x, y;
+    nbpoint=0;
+    score=0;
+    list<Fantome>::iterator itFantome;
+    list<point>::iterator itpoint;
+    list<gum>::iterator itgum;
 
-	const char terrain_defaut[16][22] = {
-        "#####################",
-		"#........###........#",
-		"#.#####..###...####.#",
-		"#........###........#",
-		"#...................#",
-		"#......#.....#......#",
-		"#......#....##......#",
-		"####...#.....#...####",
-		"G   ...##....#...   D",
-		"####...#.....#...####",
-		"#........###........#",
-		"#...................#",
-		"#.....#.......#.....#",
-		"#.....#.......#.....#",
-		"#.....#.......#.....#",
-        "#####################"
-    };
+    if(score<2990)
+    {
+        const char terrain_defaut[16][22] = {
+            "#####################",
+            "#........###........#",
+            "#.#####..###...####.#",
+            "#........###........#",
+            "#...................#",
+            "#......#.....#......#",
+            "#......#....##......#",
+            "####...#.....#...####",
+            "G   ...##....#...   D",
+            "####...#.....#...####",
+            "#........###........#",
+            "#...................#",
+            "#.....#.......#.....#",
+            "#.....#.......#.....#",
+            "#.....#.......#.....#",
+            "#####################"
+        };
 
-	largeur = 21;
-	hauteur = 16;
-	nbvie = 3;
+        largeur = 21;
+        hauteur = 16;
+        nbvie = 3;
 
-	terrain = new Case[largeur*hauteur];
+        terrain = new Case[largeur*hauteur];
 
-	for(y=0;y<hauteur;++y)
-		for(x=0;x<largeur;++x)
-            if (terrain_defaut[y][x]=='#')
-                terrain[y*largeur+x] = MUR;
-            else if(terrain_defaut[y][x]=='G')
-            {
-                terrain[y*largeur+x] = PORTEG;
-            }
-            else if(terrain_defaut[y][x]=='D')
-            {
-                terrain[y*largeur+x] = PORTED;
-            }
-            else if(terrain_defaut[y][x]==' ')
-            {
-                terrain[y*largeur+x] = RIEN;
-            }
-            else if(terrain_defaut[y][x]=='.')
-            {
-                terrain[y*largeur+x] = VIDE;
-                nbpoint=nbpoint+1;
-            }
+        for(y=0;y<hauteur;++y)
+            for(x=0;x<largeur;++x)
+                if (terrain_defaut[y][x]=='#')
+                    terrain[y*largeur+x] = MUR;
+                else if(terrain_defaut[y][x]=='G')
+                {
+                    terrain[y*largeur+x] = PORTEG;
+                }
+                else if(terrain_defaut[y][x]=='D')
+                {
+                    terrain[y*largeur+x] = PORTED;
+                }
+                else if(terrain_defaut[y][x]==' ')
+                {
+                    terrain[y*largeur+x] = RIEN;
+                }
+                else if(terrain_defaut[y][x]=='.')
+                {
+                    terrain[y*largeur+x] = VIDE;
+                    nbpoint=nbpoint+1;
+                }
+    }
+
+    else
+    {
+        const char terrain_defaut[16][23] = {
+            "######################",
+            "#........###.........#",
+            "#.#####..###...#####.#",
+            "#...#....###.....#...#",
+            "#....................#",
+            "#.......#.....#......#",
+            "#.......###.###......#",
+            "####....#.....#...####",
+            "G   ....#######...   D",
+            "####....#.....#...####",
+            "#.........###........#",
+            "#....................#",
+            "#.....#........#.....#",
+            "#.....#........#.....#",
+            "#.....#........#.....#",
+            "######################"
+        };
+
+        largeur = 22;
+        hauteur = 16;
+        nbvie = 3;
+
+        terrain = new Case[largeur*hauteur];
+
+        for(y=0;y<hauteur;++y)
+            for(x=0;x<largeur;++x)
+                if (terrain_defaut[y][x]=='#')
+                    terrain[y*largeur+x] = MUR;
+                else if(terrain_defaut[y][x]=='G')
+                {
+                    terrain[y*largeur+x] = PORTEG;
+                }
+                else if(terrain_defaut[y][x]=='D')
+                {
+                    terrain[y*largeur+x] = PORTED;
+                }
+                else if(terrain_defaut[y][x]==' ')
+                {
+                    terrain[y*largeur+x] = RIEN;
+                }
+                else if(terrain_defaut[y][x]=='.')
+                {
+                    terrain[y*largeur+x] = VIDE;
+                    nbpoint=nbpoint+1;
+                }
+    }
+
     fantomes.resize(4);
 
 // Préparation des fantômes

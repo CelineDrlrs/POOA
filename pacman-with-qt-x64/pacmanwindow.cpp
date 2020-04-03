@@ -95,6 +95,12 @@ PacmanWindow::PacmanWindow(QWidget *pParent, Qt::WindowFlags flags):QFrame(pPare
         cout<<"Impossible d'ouvrir Quitter.bmp"<<endl;
         exit(-1);
     }
+        if (pixmapf.load("./data/Fond.jpg")==false)
+    {
+        cout<<"Impossible d'ouvrir Fond.jpg"<<endl;
+        exit(-1);
+    }
+
 
 //--Fin vérification
 
@@ -174,6 +180,8 @@ PacmanWindow::PacmanWindow(QWidget *pParent, Qt::WindowFlags flags):QFrame(pPare
         hauteurCase = pixmapMur.height();
 
         resize(jeu.getNbCasesX()*largeurCase, decalage + jeu.getNbCasesY()*hauteurCase);
+        cout<<jeu.getNbCasesX()*largeurCase<<endl;
+        cout<< decalage + jeu.getNbCasesY()*hauteurCase<<endl;
 
 //    }
 
@@ -182,10 +190,19 @@ PacmanWindow::PacmanWindow(QWidget *pParent, Qt::WindowFlags flags):QFrame(pPare
 void PacmanWindow::paintEvent(QPaintEvent *)
 {
     QPainter painter(this);
+//
+//    //Fond du jeu en noir
+//    painter.fillRect(0, 0, 828, 828, Qt::black);
+//    painter.beginNativePainting();
 
-    //Fond du jeu en noir
-    painter.fillRect(0, 0, 828, 828, Qt::black);
-    painter.beginNativePainting();
+    //FOND DU JEU EN IMAGE
+    QPalette fond;
+    fond.setBrush(backgroundRole(),QBrush(pixmapf));
+    // backgroundRole() choisi le brush pour rendre le background
+    setPalette(fond);
+
+
+
     //Bouton quitter accessible à tout moment
     painter.drawPixmap(520, 1, pixmapQuitter);
 
