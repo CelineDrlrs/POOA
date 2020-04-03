@@ -109,12 +109,13 @@ PacmanWindow::PacmanWindow(QWidget *pParent, Qt::WindowFlags flags):QFrame(pPare
     btninsa->move(500,0);
     btninsa->setText("Mode INSA");
     btninsa->setFont(QFont("Segoe UI"));
+    btninsa->setStyleSheet("background-color: transparent;");
 
     //connection à la méthode
     connect(btninsa, PacmanButton::clicked, this, PacmanWindow::insa);
 
 
-    jeu.init();
+    jeu.insa();
 
     QTimer *timer = new QTimer(this);
     connect(timer, QTimer::timeout, this, PacmanWindow::handleTimer);
