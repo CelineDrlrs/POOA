@@ -5,7 +5,7 @@
 #include <QtWidgets/QtWidgets>
 #include "jeu.h"
 
-typedef enum {PLAY, PAUSE} Etat;
+
 
 // déclaration d'une nouvelle classe héritant de QPushButton pour que les touches soient actives en même temps que les boutons
 class PacmanButton : public QPushButton
@@ -23,8 +23,8 @@ class PacmanWindow : public QFrame
     QPixmap pixmapPacmanD, pixmapPacmanG, pixmapPacmanH, pixmapPacmanB, pixmapFantome, pixmapMur, pixmappoint,
         pixmapGum, pixmapFantBleu, pixmapCoeur, pixmapGameOver, pixmapVictoire, pixmapAjout, pixmapRejouer, pixmapQuitter,
         pixmapSuppr, pixmapf ;
-    PacmanButton *btnajout,*btnsuppr, *btnrejouer, *btnquitter;
-    Etat Etat;
+    PacmanButton *btnajout,*btnsuppr, *btnrejouer, *btnquitter, *btnNiveauS;
+
 
   public:
     PacmanWindow(QWidget *pParent=0, Qt::WindowFlags flags=0);
@@ -37,6 +37,7 @@ class PacmanWindow : public QFrame
     void retirefantome();
     void rejouer();
     void quitter();
+    void NiveauS();
 };
 
 #endif

@@ -8,7 +8,7 @@ PacmanWindow::PacmanWindow(QWidget *pParent, Qt::WindowFlags flags):QFrame(pPare
     // Taille des cases en pixels
     int largeurCase, hauteurCase, decalage;
     decalage = 60 ;
-    Etat=PAUSE;
+
 
 //---Vérification des images à charger
     if (pixmapPacmanD.load("./data/pacmanD.png")==false)
@@ -60,9 +60,9 @@ PacmanWindow::PacmanWindow(QWidget *pParent, Qt::WindowFlags flags):QFrame(pPare
         cout<<"Impossible d'ouvrir FantBleu.png"<<endl;
         exit(-1);
     }
-    if (pixmapCoeur.load("./data/coeur.bmp")==false)
+    if (pixmapCoeur.load("./data/coeur.png")==false)
     {
-        cout<<"Impossible d'ouvrir coeur.bmp"<<endl;
+        cout<<"Impossible d'ouvrir coeur.png"<<endl;
         exit(-1);
     }
     if (pixmapGameOver.load("./data/gameover.bmp")==false)
@@ -108,19 +108,17 @@ PacmanWindow::PacmanWindow(QWidget *pParent, Qt::WindowFlags flags):QFrame(pPare
 
     //Bouton quitter accessible en toutes situations
     PacmanButton *btnquitter = new PacmanButton(this);
-    btnquitter->setFixedSize(110,32);
-    btnquitter->move(520,0);
+    btnquitter->setFixedSize(100,32);
+    btnquitter->move(460,0);
     btnquitter->setStyleSheet("background-color: transparent;");
-
     //connection à la méthode
     connect(btnquitter, PacmanButton::clicked, this, PacmanWindow::quitter);
 
     //Bouton rejouer apparait quand on gagne
     PacmanButton *btnrejouer = new PacmanButton(this);
-    btnrejouer->setFixedSize(110,32);
-    btnrejouer->move(400,0);
+    btnrejouer->setFixedSize(100,32);
+    btnrejouer->move(350,0);
     btnrejouer->setStyleSheet("background-color: transparent;");
-
     //connection à la méthode
     connect(btnrejouer, PacmanButton::clicked, this, PacmanWindow::rejouer);
 
@@ -128,24 +126,31 @@ PacmanWindow::PacmanWindow(QWidget *pParent, Qt::WindowFlags flags):QFrame(pPare
     PacmanButton *btnajout = new PacmanButton(this);
     btnajout->resize(110,32);
     btnajout->setStyleSheet("background-color: transparent;");
-
     //création de l'action
     connect(btnajout, PacmanButton::clicked, this, PacmanWindow::ajoutfantome);
 
     //Bouton supprimer un fantôme disponible que pendant le jeu
     PacmanButton *btnsuppr = new PacmanButton(this);
     btnsuppr->resize(110,32);
-    btnsuppr->move(122,0);
+    btnsuppr->move(120,0);
     btnsuppr->setStyleSheet("background-color: transparent;");
-
     //création de l'action
     connect(btnsuppr, PacmanButton::clicked, this, PacmanWindow::retirefantome);
+
+    //Bouton pour aller au niveau 2 une fois le premier gagné
+    PacmanButton *btnNiveauS = new PacmanButton(this);
+    btnNiveauS->setFixedSize(100,32);
+    btnNiveauS->move(571,0);
+    btnNiveauS->setText("Continuer");
+     //création de l'action
+    connect(btnNiveauS, PacmanButton::clicked, this, PacmanWindow::NiveauS);
 
     btnquitter->show();
 
     if ((jeu.getnbvie()>0 && jeu.gagne()==true) || (jeu.getnbvie()==0))
     {
         btnrejouer->show();
+        btnNiveauS->show();
     }
     else
     {
@@ -164,15 +169,15 @@ PacmanWindow::PacmanWindow(QWidget *pParent, Qt::WindowFlags flags):QFrame(pPare
 
     QLabel *Tagscore = new QLabel(this);
     Tagscore->setStyleSheet("background-color:pink");
-    Tagscore->setGeometry(400,10,50,20);
+    Tagscore->setGeometry(240,35,50,20);
     Tagscore->setText("  Score");
     Tagscore->setFont(QFont("Segoe UI"));
-    Tagscore->move(270,35);
+
     Affiscore = new QLCDNumber(this);
-    Affiscore->setGeometry(400,10,50,20);
+    Affiscore->setGeometry(290,35,50,20);
     Affiscore->display(jeu.scoreactuel());
     Affiscore->setStyleSheet("background-color:black");
-    Affiscore->move(320, 35);
+
 //    }
 //    else
 //    {
@@ -204,18 +209,18 @@ void PacmanWindow::paintEvent(QPaintEvent *)
 
 
     //Bouton quitter accessible à tout moment
-    painter.drawPixmap(520, 1, pixmapQuitter);
+    painter.drawPixmap(460, 1, pixmapQuitter);
 
     //Condition d'affichage de la victoire
-    if (jeu.getnbvie()>0 && jeu.gagne()==true)                                // On teste si le joueur a encore des vies
+    if (jeu.getnbvie()>0 && jeu.gagne()==true)                      // On teste si le joueur a encore des vies
     {
         painter.drawPixmap(0, 65, pixmapVictoire); //si on gagne, l'image de la vitoire apparaît
-        painter.drawPixmap(400, 1, pixmapRejouer);
+        painter.drawPixmap(350, 1, pixmapRejouer); //Bouton rejouer
     }
     else if (jeu.getnbvie()==0)
     {
         painter.drawPixmap(50, 65, pixmapGameOver);      // Si toutes les vies sont épuisées, l'image de Game Over apparait à la place du terrain
-        painter.drawPixmap(400, 1, pixmapRejouer);
+        painter.drawPixmap(350, 1, pixmapRejouer);  //Bouton rejouer
     }
     else
     {
@@ -235,7 +240,7 @@ void PacmanWindow::paintEvent(QPaintEvent *)
 
         //Dessins des boutons
         painter.drawPixmap(1, 1, pixmapAjout);
-        painter.drawPixmap(122, 1, pixmapSuppr);
+        painter.drawPixmap(120, 1, pixmapSuppr);
 
 
         // Dessine les cases
@@ -266,7 +271,7 @@ void PacmanWindow::paintEvent(QPaintEvent *)
                 int i;
                 for(i=1;i<=jeu.getnbvie();i++)
                 {
-                    painter.drawPixmap(240 + i*32, 0, pixmapCoeur);     // On affiche les coeurs autant de fois que le ou les joueurs ont de vie en les décalant pour chacun
+                    painter.drawPixmap(210 + i*32, 0, pixmapCoeur);     // On affiche les coeurs autant de fois que le ou les joueurs ont de vie en les décalant pour chacun
                 }
 
         // Dessine Pacman en fonction de la touche appuyée pour le tourner dans la bonne direction
@@ -364,7 +369,7 @@ void PacmanWindow::retirefantome()      //Méthode connectée au bouton "supprimer
 
 void PacmanWindow::rejouer()                 //Méthode connectée au bouton "rejouer", le score est remis à 0 et le jeu est réinitialisé
 {
-    Etat=PLAY;
+
     jeu.init();
     jeu.gumMiam=0;  //Si un super gum a été mangé, annuler l'effet en recommencant la partie
 }
@@ -372,4 +377,12 @@ void PacmanWindow::rejouer()                 //Méthode connectée au bouton "rejo
 void PacmanWindow::quitter()                                 // pour quitter le jeu, on ferme la fenetre pacmanwindow
 {
     close();
+}
+
+void PacmanWindow::NiveauS()
+{
+    if(jeu.getnbvie()>0 && jeu.gagne()==true)                      // Comme le grisage du bouton tant que la victoire n'était pas atteinte n'a pas fonctionné, on utilise un if avec condition sur la victoire directement
+    {
+        jeu.init();
+    }
 }
