@@ -268,7 +268,6 @@ void Jeu::evolue()
                 {
                     score += 250;
                     fantomes.erase(itFantome);
-                    Jeu::gumMiam = 0;
                     break;
                 }
             }
