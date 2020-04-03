@@ -206,12 +206,12 @@ void PacmanWindow::paintEvent(QPaintEvent *)
     if (jeu.getnbvie()>0 && jeu.gagne()==true)                                // On teste si le joueur a encore des vies
     {
         painter.drawPixmap(0, 65, pixmapVictoire); //si on gagne, l'image de la vitoire apparaît
-        painter.drawPixmap(400, 0, pixmapJouer);
+        painter.drawPixmap(400, 1, pixmapJouer);
     }
     else if (jeu.getnbvie()==0)
     {
         painter.drawPixmap(50, 65, pixmapGameOver);      // Si toutes les vies sont épuisées, l'image de Game Over apparait à la place du terrain
-        painter.drawPixmap(400, 0, pixmapJouer);
+        painter.drawPixmap(400, 1, pixmapJouer);
     }
     else
     {
@@ -232,9 +232,9 @@ void PacmanWindow::paintEvent(QPaintEvent *)
         decalage = 60;
 
         //Dessins des boutons
-        painter.drawPixmap(0, 0, pixmapAjout);
-        painter.drawPixmap(122, 0, pixmapSuppr);
-        painter.drawPixmap(480, 0, pixmapQuitter);
+        painter.drawPixmap(1, 1, pixmapAjout);
+        painter.drawPixmap(122, 1, pixmapSuppr);
+        painter.drawPixmap(480, 1, pixmapQuitter);
 
 
         // Dessine les cases
