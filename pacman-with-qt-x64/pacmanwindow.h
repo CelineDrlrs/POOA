@@ -20,7 +20,9 @@ class PacmanWindow : public QFrame
   protected:
     Jeu jeu;
     QLCDNumber *Affiscore;
-    QPixmap pixmapPacmanD, pixmapPacmanG, pixmapPacmanH, pixmapPacmanB, pixmapFantome, pixmapMur, pixmappoint, pixmapGum, pixmapFantBleu, pixmapCoeur, pixmapGameOver, pixmapVictoire, pixmapAjout, pixmapJouer, pixmapQuitter, pixmapSuppr ;
+    QPixmap pixmapPacmanD, pixmapPacmanG, pixmapPacmanH, pixmapPacmanB, pixmapFantome, pixmapMur, pixmappoint,
+        pixmapGum, pixmapFantBleu, pixmapCoeur, pixmapGameOver, pixmapVictoire, pixmapAjout, pixmapRejouer, pixmapQuitter,
+        pixmapSuppr ;
     PacmanButton *btnajout,*btnsuppr, *btnrejouer, *btnquitter;
     Etat Etat;
 
