@@ -73,6 +73,7 @@ PacmanWindow::PacmanWindow(QWidget *pParent, Qt::WindowFlags flags):QFrame(pPare
         cout<<"Impossible d'ouvrir victoire.bmp"<<endl;
         exit(-1);
     }
+<<<<<<< Updated upstream
 
     //Bouton ajout d'un fantôme
     PacmanButton *btnajout = new PacmanButton(this);
@@ -117,6 +118,94 @@ PacmanWindow::PacmanWindow(QWidget *pParent, Qt::WindowFlags flags):QFrame(pPare
 
     jeu.insa();
 
+=======
+    if (pixmapAjout.load("./data/ajoutfantome.bmp")==false)
+    {
+        cout<<"Impossible d'ouvrir ajoutfantome.bmp"<<endl;
+        exit(-1);
+    }
+    if (pixmapJouer.load("./data/Jouer.bmp")==false)
+    {
+        cout<<"Impossible d'ouvrir Jouer.bmp"<<endl;
+        exit(-1);
+    }
+    if (pixmapRejouer.load("./data/Rejouer.bmp")==false)
+    {
+        cout<<"Impossible d'ouvrir Rejouer.bmp"<<endl;
+        exit(-1);
+    }
+        if (pixmapSuppr.load("./data/Suppr.bmp")==false)
+    {
+        cout<<"Impossible d'ouvrir Suppr.bmp"<<endl;
+        exit(-1);
+    }
+        if (pixmapQuitter.load("./data/Quitter.bmp")==false)
+    {
+        cout<<"Impossible d'ouvrir Quitter.bmp"<<endl;
+        exit(-1);
+    }
+    if (pixmapQuitterD.load("./data/QuitterD.bmp")==false)
+    {
+        cout<<"Impossible d'ouvrir QuitterD.bmp"<<endl;
+        exit(-1);
+    }
+
+//--Fin vérification
+
+
+//    if (Etat==PLAY)
+//    {
+//--Mise en place des boutons
+//    //Bouton ajout d'un fantôme
+//    PacmanButton *btnajout = new PacmanButton(this);
+//    btnajout->resize(110,32);
+//  //  btnajout->setText("Ajouter un fantome");
+////    btnajout->setFont(QFont("Segoe UI"));
+//    btnajout->setStyleSheet("background-color: transparent;");
+//
+//    //création de l'action
+//    connect(btnajout, PacmanButton::clicked, this, PacmanWindow::ajoutfantome);
+//
+//
+//    //Bouton supprimer un fantôme
+//    PacmanButton *btnsuppr = new PacmanButton(this);
+//    btnsuppr->resize(110,32);
+//    btnsuppr->move(122,0);
+////    btnsuppr->setText("Retirer un fantome");
+////    btnsuppr->setFont(QFont("Segoe UI"));
+//    btnsuppr->setStyleSheet("background-color: transparent;");
+//
+//    //création de l'action
+//    connect(btnsuppr, PacmanButton::clicked, this, PacmanWindow::retirefantome);
+//
+//    //Bouton rejouer
+//    PacmanButton *btnrejouer = new PacmanButton(this);
+//    btnrejouer->setFixedSize(110,32);
+//    btnrejouer->move(400,0);
+////    btnrejouer->setText("Rejouer");
+////    btnrejouer->setFont(QFont("Segoe UI"));
+//    btnrejouer->setStyleSheet("background-color: transparent;");
+//
+//    //connection à la méthode
+//    connect(btnrejouer, PacmanButton::clicked, this, PacmanWindow::rejouer);
+//
+//    //Bouton quitter
+//    PacmanButton *btnquitter = new PacmanButton(this);
+//    btnquitter->setFixedSize(110,32);
+//    btnquitter->move(480,0);
+////    btnquitter->setText("Quitter");
+////    btnquitter->setFont(QFont("Segoe UI"));
+//    btnquitter->setStyleSheet("background-color: transparent;");
+//
+//    //connection à la méthode
+//    connect(btnquitter, PacmanButton::clicked, this, PacmanWindow::quitter);
+//
+////--Fin des boutons et leur connexion
+//
+//
+//    jeu.init();
+//
+>>>>>>> Stashed changes
     QTimer *timer = new QTimer(this);
     connect(timer, QTimer::timeout, this, PacmanWindow::handleTimer);
     timer->start(100);
@@ -133,19 +222,68 @@ PacmanWindow::PacmanWindow(QWidget *pParent, Qt::WindowFlags flags):QFrame(pPare
     Tagscore->setStyleSheet("background-color:pink");
     Tagscore->setGeometry(400,10,50,20);
     Tagscore->setText("  Score");
-    Tagscore->setFont(QFont("Segoe UI"));
+
     Tagscore->move(270,35);
     Affiscore = new QLCDNumber(this);
     Affiscore->setGeometry(400,10,50,20);
     Affiscore->display(jeu.scoreactuel());
     Affiscore->setStyleSheet("background-color:black");
     Affiscore->move(320, 35);
+<<<<<<< Updated upstream
+=======
+//    }
+//    else
+//    {
+        jeu.init();
+
+        largeurCase = pixmapMur.width();
+        hauteurCase = pixmapMur.height();
+
+        resize(jeu.getNbCasesX()*largeurCase, decalage + jeu.getNbCasesY()*hauteurCase);
+
+//    }
+
+
+
+
+//    if (jeu.getnbvie()>0)
+//    {
+//        btnrejouer->hide(); //On le cache pendant le jeu
+//        btnquitter-> show();
+//        btnsuppr->show();
+//        btnajout->show();
+//    }
+//    else if (jeu.getnbvie()==0)
+//    {
+//        btnrejouer->show(); //on l'affiche à la fin
+//        btnquitter->show();
+//        btnsuppr->hide();
+//        btnajout->hide();
+//    }
+>>>>>>> Stashed changes
 }
 
 void PacmanWindow::paintEvent(QPaintEvent *)
 {
     QPainter painter(this);
+<<<<<<< Updated upstream
     if(jeu.getnbvie()>0)                                // On teste si le joueur a encore des vies
+=======
+
+
+    //Condition d'affichage de la victoire
+    if (jeu.getnbvie()>0 && jeu.gagne()==true)                                // On teste si le joueur a encore des vies
+    {
+        painter.drawPixmap(0, 65, pixmapVictoire); //si on gagne, l'image de la vitoire apparaît
+        painter.drawPixmap(400, 1, pixmapJouer);
+    }
+    else if (jeu.getnbvie()==0)
+    {
+        painter.drawPixmap(50, 65, pixmapGameOver);      // Si toutes les vies sont épuisées, l'image de Game Over apparait à la place du terrain
+        painter.drawPixmap(400, 1, pixmapRejouer);
+    }
+    else if (jeu.getnbvie()>0 && jeu.gagne()==false)
+>>>>>>> Stashed changes
     {
         list<Fantome>::const_iterator itFantome;
         list<point>::const_iterator itpoint;
@@ -218,10 +356,30 @@ void PacmanWindow::paintEvent(QPaintEvent *)
             painter.drawPixmap(jeu.getPacmanX()*largeurCase, decalage + jeu.getPacmanY()*hauteurCase, pixmapPacmanD);
         }
 
+<<<<<<< Updated upstream
         //Condition d'affichage de la victoire
         if (jeu.gagne()==true)
         {
             painter.drawPixmap(0, 70, pixmapVictoire); //si on gagne, l'image de la vitoire apparaît
+=======
+//    //écran d'accueil
+//    else
+//    {
+//        int largeurCase, largeurecran;
+//
+//
+//        //Fond du jeu en noir
+//        painter.fillRect(0, 0, 828, 828, Qt::black);
+//        painter.beginNativePainting();
+//
+//        largeurCase = pixmapMur.width();
+//        largeurecran=(jeu.getNbCasesX()*largeurCase);
+//
+//
+//        painter.drawPixmap(largeurecran/10, 55, pixmapJouer);
+//        painter.drawPixmap(250, 455, pixmapQuitterD);
+//    }
+>>>>>>> Stashed changes
 
         }
 

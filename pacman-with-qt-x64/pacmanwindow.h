@@ -18,8 +18,16 @@ class PacmanWindow : public QFrame
   protected:
     Jeu jeu;
     QLCDNumber *Affiscore;
+<<<<<<< Updated upstream
     QPixmap pixmapPacmanD, pixmapPacmanG, pixmapPacmanH, pixmapPacmanB, pixmapFantome, pixmapMur, pixmappoint, pixmapGum, pixmapFantBleu, pixmapCoeur, pixmapGameOver, pixmapVictoire ;
     PacmanButton *btnajout,*btnsuppr;
+=======
+    QPixmap pixmapPacmanD, pixmapPacmanG, pixmapPacmanH, pixmapPacmanB, pixmapFantome, pixmapMur, pixmappoint,
+        pixmapGum, pixmapFantBleu, pixmapCoeur, pixmapGameOver, pixmapVictoire, pixmapAjout, pixmapJouer, pixmapQuitter,
+        pixmapSuppr, pixmapRejouer,pixmapQuitterD;
+    PacmanButton *btnajout,*btnsuppr, *btnrejouer, *btnquitter;
+    Etat Etat;
+>>>>>>> Stashed changes
 
   public:
     PacmanWindow(QWidget *pParent=0, Qt::WindowFlags flags=0);
