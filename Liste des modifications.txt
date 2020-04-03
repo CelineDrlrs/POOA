@@ -1,12 +1,12 @@
 Changements visuels/décors :
 - Changement du design de Pacman (avec noeud), fantôme pirate, fantôme bleu
 - Changement de design des briques
-- Ajout d'un fond noir
+- Ajout d'un fond noir / fond image
 
 Mise en places de boutons et connexion à la fonction :
 - d'ajout de fantômes
 - de suppression de fantômes
-Ajout d'un bouton rejouer qui remet la partie à zéro.
+Ajout d'un bouton rejouer qui remet la partie à zéro (quand on perd).
 Ajout d'un boutton pour fermer la fenêtre de jeu.
 
 Transformation de ces boutons en images cliquables. Et apparition du bouton rejouer
@@ -34,7 +34,8 @@ Affichage du score avec incrémentation par action :
 
 Blocage des touches en cas de victoire
 
-
-
 Possibilité de se téléporter d'un bout à l'autre du jeu
+
+Possibilité de changer de niveau quand on a gagné : il y a trois niveaux différents
+à l'aide d'un bouton
 

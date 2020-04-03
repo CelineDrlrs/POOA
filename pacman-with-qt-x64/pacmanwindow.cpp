@@ -85,23 +85,26 @@ PacmanWindow::PacmanWindow(QWidget *pParent, Qt::WindowFlags flags):QFrame(pPare
         cout<<"Impossible d'ouvrir Rejouer.bmp"<<endl;
         exit(-1);
     }
-        if (pixmapSuppr.load("./data/Suppr.bmp")==false)
+    if (pixmapSuppr.load("./data/Suppr.bmp")==false)
     {
         cout<<"Impossible d'ouvrir Suppr.bmp"<<endl;
         exit(-1);
     }
-        if (pixmapQuitter.load("./data/Quitter.bmp")==false)
+    if (pixmapQuitter.load("./data/Quitter.bmp")==false)
     {
         cout<<"Impossible d'ouvrir Quitter.bmp"<<endl;
         exit(-1);
     }
-        if (pixmapf.load("./data/Fond.jpg")==false)
+    if (pixmapf.load("./data/Fond.jpg")==false)
     {
         cout<<"Impossible d'ouvrir Fond.jpg"<<endl;
         exit(-1);
     }
-
-
+    if (pixmapSuivant.load("./data/Suivant.bmp")==false)
+    {
+        cout<<"Impossible d'ouvrir Suivant.bmp"<<endl;
+        exit(-1);
+    }
 //--Fin vérification
 
 //--LES BOUTONS
@@ -141,7 +144,7 @@ PacmanWindow::PacmanWindow(QWidget *pParent, Qt::WindowFlags flags):QFrame(pPare
     PacmanButton *btnNiveauS = new PacmanButton(this);
     btnNiveauS->setFixedSize(100,32);
     btnNiveauS->move(571,0);
-    btnNiveauS->setText("Continuer");
+    btnNiveauS->setStyleSheet("background-color: transparent;");
      //création de l'action
     connect(btnNiveauS, PacmanButton::clicked, this, PacmanWindow::NiveauS);
 
@@ -211,16 +214,18 @@ void PacmanWindow::paintEvent(QPaintEvent *)
     //Bouton quitter accessible à tout moment
     painter.drawPixmap(460, 1, pixmapQuitter);
 
+    painter.drawPixmap(571, 1, pixmapSuivant);
+
     //Condition d'affichage de la victoire
     if (jeu.getnbvie()>0 && jeu.gagne()==true)                      // On teste si le joueur a encore des vies
     {
         painter.drawPixmap(0, 65, pixmapVictoire); //si on gagne, l'image de la vitoire apparaît
-        painter.drawPixmap(350, 1, pixmapRejouer); //Bouton rejouer
+
     }
     else if (jeu.getnbvie()==0)
     {
         painter.drawPixmap(50, 65, pixmapGameOver);      // Si toutes les vies sont épuisées, l'image de Game Over apparait à la place du terrain
-        painter.drawPixmap(350, 1, pixmapRejouer);  //Bouton rejouer
+        painter.drawPixmap(350, 1, pixmapRejouer); //Bouton rejouer
     }
     else
     {
@@ -370,8 +375,11 @@ void PacmanWindow::retirefantome()      //Méthode connectée au bouton "supprimer
 void PacmanWindow::rejouer()                 //Méthode connectée au bouton "rejouer", le score est remis à 0 et le jeu est réinitialisé
 {
 
+    jeu.niveau=0 ;
+    jeu.score=0;
     jeu.init();
     jeu.gumMiam=0;  //Si un super gum a été mangé, annuler l'effet en recommencant la partie
+
 }
 
 void PacmanWindow::quitter()                                 // pour quitter le jeu, on ferme la fenetre pacmanwindow
@@ -385,6 +393,7 @@ void PacmanWindow::NiveauS()
     {
         jeu.niveau+=1 ;
         jeu.timeFant=0;
+        jeu.score=0;
         jeu.init();
 
     }
