@@ -60,7 +60,8 @@ class Jeu
     int largeur, hauteur; // Nombre de cases en largeur et en hauteur
     int posPacmanX, posPacmanY;
     int nbvie;
-    int timeFant;
+
+
 
   public:
     list<Fantome> fantomes;
@@ -69,6 +70,8 @@ class Jeu
     int nbpoint, score ;
     Direction PosPac;
     int gumMiam;
+    int niveau;
+    int timeFant;
 
     Jeu();
     Jeu(const Jeu &)=delete;

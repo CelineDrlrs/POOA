@@ -64,6 +64,7 @@ Jeu::Jeu()
 {
     terrain = NULL;
     score =0;
+    niveau =0;
     largeur = 0; hauteur = 0;
     posPacmanX = 0; posPacmanY = 0;
     nbvie = 0;
@@ -80,12 +81,11 @@ bool Jeu::init()
 {
     int x, y;
     nbpoint=0;
-    score=0;
     list<Fantome>::iterator itFantome;
     list<point>::iterator itpoint;
     list<gum>::iterator itgum;
 
-    if(score<2990)
+    if(niveau==0)
     {
         const char terrain_defaut[16][22] = {
             "#####################",
@@ -135,7 +135,7 @@ bool Jeu::init()
                 }
     }
 
-    else
+    else if(niveau==1)
     {
         const char terrain_defaut[16][23] = {
             "######################",
@@ -183,6 +183,55 @@ bool Jeu::init()
                     terrain[y*largeur+x] = VIDE;
                     nbpoint=nbpoint+1;
                 }
+    }
+    else if(niveau==2)
+    {
+       const char terrain_defaut[18][22] = {
+        "#####################",
+		"#...................#",
+		"#......#######......#",
+		"#...................#",
+		"#......#######......#",
+		"#.........##........#",
+		"#.......##..........#",
+        "#......#######......#",
+		"####.............####",
+		"G   ...#...##....   D",
+		"####....##...#...####",
+		"#...................#",
+		"#......######.......#",
+		"#.........####......#",
+		"#......######.......#",
+		"#...................#",
+        "#####################"
+    };
+    largeur = 22;
+    hauteur = 16;
+    nbvie = 3;
+
+    terrain = new Case[largeur*hauteur];
+
+    for(y=0;y<hauteur;++y)
+        for(x=0;x<largeur;++x)
+            if (terrain_defaut[y][x]=='#')
+                terrain[y*largeur+x] = MUR;
+            else if(terrain_defaut[y][x]=='G')
+            {
+                terrain[y*largeur+x] = PORTEG;
+            }
+            else if(terrain_defaut[y][x]=='D')
+            {
+                terrain[y*largeur+x] = PORTED;
+            }
+            else if(terrain_defaut[y][x]==' ')
+            {
+                terrain[y*largeur+x] = RIEN;
+            }
+            else if(terrain_defaut[y][x]=='.')
+            {
+                terrain[y*largeur+x] = VIDE;
+                nbpoint=nbpoint+1;
+            }
     }
 
     fantomes.resize(4);
@@ -331,7 +380,7 @@ void Jeu::evolue()
             Jeu::gumMiam = 0;
         }
 
-        if(testpertevie())         //On regarde si pacman perd une vie puis on applique la perte sur le nombre de vie et on replace pacman au début du jeu
+        if(testpertevie())  //On regarde si pacman perd une vie puis on applique la perte sur le nombre de vie et on replace pacman au début du jeu
             {
                 int largeur = 20;
                 int hauteur = 15;

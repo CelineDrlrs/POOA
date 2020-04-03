@@ -383,6 +383,9 @@ void PacmanWindow::NiveauS()
 {
     if(jeu.getnbvie()>0 && jeu.gagne()==true)                      // Comme le grisage du bouton tant que la victoire n'était pas atteinte n'a pas fonctionné, on utilise un if avec condition sur la victoire directement
     {
+        jeu.niveau+=1 ;
+        jeu.timeFant=0;
         jeu.init();
+
     }
 }
